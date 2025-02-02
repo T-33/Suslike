@@ -6,30 +6,52 @@ interface addPostProps {
     addPost: (newPost : Post) => void;
 }
 
-const initialState = {
-    text: ' ',
+interface PostState {
+    text: string;
+    imageUrl?: string;
+}
+
+const initialState: PostState = {
+    text: ' '
 }
 
 const AddPostForm: FC<addPostProps> = ({addPost}) => {
-    const [newPost, setNewPost] = useState<{text: string}>(initialState)
+    const [newPost, setNewPost] = useState<PostState>(initialState)
 
     const handleChange = (e : ChangeEvent<HTMLInputElement>) => {
+        const {name, value, type} = e.target
+
+        if(type === 'file'){
+            const file = e.target.files?.[0];
+
+            if(file){
+                const imageUrl = URL.createObjectURL(file);
+                setNewPost((prev) => ({
+                    ...prev,
+                    imageUrl
+                }))
+            }
+        }
+        else{
+            setNewPost((prev) => ({
+                ...prev,
+                [name] : value}
+            ));
+        }
+
         console.log('Handle change >>', e.target);
-        setNewPost({text: e.target.value});
     }
 
     const handleSubmit = (e : FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const {text} = newPost;
-
-        if(text){
+        if(newPost.text){
             addPost({
-                text,
-                date: Date.now()
+                text: newPost.text,
+                date: Date.now(),
+                ...(newPost.imageUrl && { imageUrl: newPost.imageUrl })
             })
         }
-
 
         console.log("New post", newPost.text);
         setNewPost(initialState);
@@ -38,14 +60,26 @@ const AddPostForm: FC<addPostProps> = ({addPost}) => {
     return (
         <form onSubmit={handleSubmit}>
             <input
-                name ="post"
                 type="text"
-                placeholder="Write something"
+                name ="text"
+                placeholder="Write something..."
                 onChange={handleChange}
                 value={newPost.text}
                 className="w-full p-2 m-5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-
+            <input type="file"
+                   name="imageUrl"
+                   accept="image/*"
+                   onChange={handleChange}
+                   className="border p-2 rounded-2xl"
+            />
+            {newPost.imageUrl && (
+                <img
+                    src={newPost.imageUrl}
+                    alt="Preview"
+                    className="w-40 h-40 object-cover rounded-lg"
+                />
+            )}
             <button type="submit"> Опубликовать </button>
         </form>
     )
