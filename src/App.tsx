@@ -1,4 +1,4 @@
-import './App.css'
+import '../src/styles/App.css'
 import Authorization from './components/Authorization.tsx'
 import Home from './components/Home.tsx'
 import UserProfile from './components/UserProfile.tsx'
@@ -8,12 +8,17 @@ import {
     BrowserRouter as Router,
     Routes,
     Route,
-    Link
+    Link,
+    useLocation
 } from "react-router-dom";
 
-function App() {
-  return (
-       <Router>
+function AppContent() {
+    const location = useLocation();
+    const showNavigation = location.pathname === '/';
+
+    return (
+        <>
+            {showNavigation && (
                 <nav>
                     <ul>
                         <li>
@@ -23,21 +28,27 @@ function App() {
                             <Link to="/user">User</Link>
                         </li>
                         <li>
-                            <Link to="/authorization">Authorize???</Link>
+                            <Link to="/authorization">Authorize</Link>
                         </li>
                     </ul>
                 </nav>
+            )}
 
-                {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
-                <Routes>
-                    <Route path="/authorization" element={<Authorization />}/>
-                    <Route path="/" element={<Home />}/>
-                    <Route path="/user" element={<UserProfile />}/>
-                    <Route path="*" element={<NotFound />}/>
-                </Routes>
-        </Router>
-  )
+            <Routes>
+                <Route path="/authorization" element={<Authorization />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/user" element={<UserProfile />} />
+                <Route path="*" element={<NotFound />} />
+            </Routes>
+        </>
+    )
 }
 
+function App() {
+    return (
+        <Router>
+            <AppContent />
+        </Router>
+    );
+}
 export default App
