@@ -1,7 +1,7 @@
 import '../styles/Authorization.css'
 
 import React, {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, Link} from 'react-router-dom';
 
 export default function Authorization() {
 
@@ -55,6 +55,11 @@ export default function Authorization() {
                 {error && <p style={{ color: 'red' }}>{error}</p>}
                 <button type="submit" className={"my-3"}>Log in</button>
             </form>
+            <div>
+                <Link to={"/forgot-password"} className={"text-blue-300 hover:underline"}>
+                    Forgot password?
+                </Link>
+            </div>
         </div>
     )
 }
