@@ -1,23 +1,42 @@
-import { useState } from 'react'
-import './styles/App.css'
-import AddPostForm from "./components/AddPostForm.tsx";
-import Post from "./models/Post.ts";
+import './App.css'
+import Authorization from './components/Authorization.tsx'
+import Home from './components/Home.tsx'
+import UserProfile from './components/UserProfile.tsx'
+import NotFound from './components/NotFound.tsx'
+
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    Link
+} from "react-router-dom";
 
 function App() {
-  const [postsList, setPostsList] = useState<Post[]>([]);
-
-  const addPost = (newPost: Post) => {
-      setPostsList([...postsList, newPost]);
-  }
-    console.log('PostList>>>', postsList)
-
   return (
-    <>
-        <p className= "text-4xl">Как прошел ваш день?</p>
-        <AddPostForm
-            addPost={addPost}
-        />
-    </>
+       <Router>
+                <nav>
+                    <ul>
+                        <li>
+                            <Link to="/">Home</Link>
+                        </li>
+                        <li>
+                            <Link to="/user">User</Link>
+                        </li>
+                        <li>
+                            <Link to="/authorization">Authorize???</Link>
+                        </li>
+                    </ul>
+                </nav>
+
+                {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+                <Routes>
+                    <Route path="/authorization" element={<Authorization />}/>
+                    <Route path="/" element={<Home />}/>
+                    <Route path="/user" element={<UserProfile />}/>
+                    <Route path="*" element={<NotFound />}/>
+                </Routes>
+        </Router>
   )
 }
 
