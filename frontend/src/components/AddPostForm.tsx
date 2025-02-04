@@ -1,5 +1,5 @@
 import { useState, FC, ChangeEvent, FormEvent} from "react";
-import Post from "../models/Post.ts";
+import Post from "../types/Post.ts";
 import '../styles/Post.css'
 
 interface addPostProps {

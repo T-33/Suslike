@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './styles/App.css'
 import AddPostForm from "./components/AddPostForm.tsx";
-import Post from "./models/Post.ts";
+import Post from "./types/Post.ts";
 
 function App() {
   const [postsList, setPostsList] = useState<Post[]>([]);
