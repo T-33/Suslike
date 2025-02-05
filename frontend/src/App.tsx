@@ -1,24 +1,53 @@
-import { useState } from 'react'
-import './styles/App.css'
-import AddPostForm from "./components/AddPostForm.tsx";
-import Post from "./types/Post.ts";
+import '../src/styles/App.css'
+import Authorization from './components/Authorization.tsx'
+// import Home from './components/Home.tsx'
+// import UserProfile from './components/UserProfile.tsx'
+// import NotFound from './components/NotFound.tsx'
+import Registration from './components/Authorization.tsx'
 
-function App() {
-  const [postsList, setPostsList] = useState<Post[]>([]);
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    Link,
+    useLocation
+} from "react-router-dom";
 
-  const addPost = (newPost: Post) => {
-      setPostsList([...postsList, newPost]);
-  }
-    console.log('PostList>>>', postsList)
+function AppContent() {
+    const location = useLocation();
+    const showNavigation = location.pathname === '/';
 
-  return (
-    <>
-        <p className= "text-4xl">Как прошел ваш день?</p>
-        <AddPostForm
-            addPost={addPost}
-        />
-    </>
-  )
+    return (
+        <>
+            {showNavigation && (
+                <nav>
+                    <ul>
+                        <li>
+                            <Link to="/user">User</Link>
+                        </li>
+                        <li>
+                            <Link to="/authorization">Authorize</Link>
+                        </li>
+                    </ul>
+                </nav>
+            )}
+
+            <Routes>
+                <Route path="/authorization" element={<Authorization />} />
+                {/*<Route path="/" element={<Home />} />*/}
+                {/*<Route path="/user" element={<UserProfile />} />*/}
+                {/*<Route path="*" element={<NotFound />} />*/}
+                <Route path="/register" element={<Registration />} />
+            </Routes>
+        </>
+    )
 }
 
+function App() {
+    return (
+        <Router>
+            <AppContent />
+        </Router>
+    );
+}
 export default App
