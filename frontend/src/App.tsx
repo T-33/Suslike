@@ -1,7 +1,7 @@
 import '../src/styles/App.css'
 import Authorization from './components/Authorization.tsx'
-// import Home from './components/Home.tsx'
-// import UserProfile from './components/UserProfile.tsx'
+import Home from './components/Home.tsx'
+import UserProfile from './components/UserProfile.tsx'
 // import NotFound from './components/NotFound.tsx'
 import Registration from './components/Authorization.tsx'
 
@@ -34,8 +34,8 @@ function AppContent() {
 
             <Routes>
                 <Route path="/authorization" element={<Authorization />} />
-                {/*<Route path="/" element={<Home />} />*/}
-                {/*<Route path="/user" element={<UserProfile />} />*/}
+                <Route path="/" element={<Home />} />
+                <Route path="/user/:userId" element={<UserProfile />}/>
                 {/*<Route path="*" element={<NotFound />} />*/}
                 <Route path="/register" element={<Registration />} />
             </Routes>
