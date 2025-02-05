@@ -1,0 +1,13 @@
+{
+  "full_name": "John Doe",
+  "username": "johndoe123",
+  "email": "johndoe@example.com",
+  "date_of_birth": "15.08.2006",
+  "password": "securepassword123",
+  "profile_picture_url": "https://example.com/profile/johndoe.jpg",
+  "includeZodiacSignFlag": true,
+  "relationship_status": "Single",
+  "followers": 1500,
+  "following": 300,
+  "user_id": 123456
+}
