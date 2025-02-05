@@ -1,9 +1,9 @@
-import express from "express";
-import cors from "cors";
-import fs from "fs/promises";
-import path from "path";
+import express = require('express');
+import cors = require('cors');
+import fs = require('fs/promises');
+import path = require('path');
 
-import User from "./types/User"
+import User from "./User"
 
 
 const app = express();
@@ -45,5 +45,9 @@ app.post("/register", async (req, res) => {
         console.error('Error during registration:', error);
         res.status(500).json({message: "Internal server error"});
     }
-    }
-)
+})
+
+
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
