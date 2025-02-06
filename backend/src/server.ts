@@ -2,18 +2,25 @@ import express, { Request, Response } from 'express';
 import fs from 'fs';
 import path from 'path';
 import cors from 'cors';
+import bodyParser from "body-parser";
+
+import multer from "multer";
 
 import {User} from '../types/User'
 
-import bodyParser from "body-parser";
 
 const app = express();
-app.use(cors());
-const port = 3001;
-
-const FILE_PATH = path.join(__dirname, '../../data/users.json');
 app.use(bodyParser.json());
 app.use(express.json());
+app.use(cors());
+
+const port = 3001;
+const FILE_PATH = path.join(__dirname, '../../data/users.json');
+const UPLOAD_PATH = path.join(__dirname, '../../data/user_avatars');
+
+if (!fs.existsSync(UPLOAD_PATH)) {
+    fs.mkdirSync(UPLOAD_PATH);
+}
 
 function readUsers(): User[] {
     if (!fs.existsSync(FILE_PATH)) {
@@ -50,13 +57,15 @@ app.post("/register", (req: Request, res: Response)=> {
     }
 
     newUser.user_id = users.length + 1;
-
     users.push(newUser);
     writeUsers(users);
 
     res.status(201).json({ message: 'User registered successfully', user: newUser });
     return;
 })
+
+
+
 
 
 app.listen(port, () => {
