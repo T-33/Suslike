@@ -1,12 +1,13 @@
 import express, { Request, Response } from 'express';
 import fs from 'fs';
 import path from 'path';
+import cors from 'cors';
 
 import {User} from '../types/User'
 
-
 const app = express();
-const port = process.env.PORT || 3001;
+app.use(cors());
+const port = 3001;
 
 const FILE_PATH = path.join(__dirname, "../data/users.json");
 
