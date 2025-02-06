@@ -16,11 +16,24 @@ app.use(cors());
 
 const port = 3001;
 const FILE_PATH = path.join(__dirname, '../../data/users.json');
-const UPLOAD_PATH = path.join(__dirname, '../../data/user_avatars');
+const UPLOADS_DIR = path.join(__dirname, '../../data/user_avatars');
 
-if (!fs.existsSync(UPLOAD_PATH)) {
-    fs.mkdirSync(UPLOAD_PATH);
+if (!fs.existsSync(UPLOADS_DIR)) {
+    fs.mkdirSync(UPLOADS_DIR);
 }
+
+const storage = multer.diskStorage({
+    destination: (req, file, callback) => {
+        callback(null, UPLOADS_DIR);
+    },
+    filename: (req, file, callback) => {
+        const uniqueSuffix = Date.now() + "-"  + Math.round(Math.random() * 1e9);
+        callback(null, uniqueSuffix + path.extname(file.originalname));
+    }
+})
+
+const upload = multer({storage});
+
 
 function readUsers(): User[] {
     if (!fs.existsSync(FILE_PATH)) {
@@ -33,6 +46,19 @@ function readUsers(): User[] {
 function writeUsers(users: User[]): void {
     fs.writeFileSync(FILE_PATH, JSON.stringify(users, null, 2));
 }
+
+app.post('/upload', upload.single("file"), (req: Request, res: Response) => {
+    if(!req.file){
+        res.status(400).json({error: 'No file uploaded'});
+        return;
+    }
+
+    const fileUrl =  `http://localhost:${port}/uploads/${req.file.filename}`;
+    res.json({url: fileUrl});
+});
+
+app.use("/uploads", express.static(UPLOADS_DIR));
+
 
 app.post("/register", (req: Request, res: Response)=> {
     console.log('Received registration data:', req.body);
