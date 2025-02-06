@@ -102,7 +102,22 @@ app.post('/login', (req: Request, res: Response) => {
     res.json({ message: "Login successful", user });
 })
 
+app.post('/reset-password', (req: Request, res: Response) => {
+    const{username, newPassword} = req.body;
+    let users = readUsers();
 
+    const userIndex = users.findIndex((user) => user.username === username);
+    if(userIndex === -1){
+        res.status(404).json({error: "User not found!"});
+        return;
+    }
+
+    users[userIndex].password = newPassword;
+    writeUsers(users);
+
+    res.json({ message: "Password updated successfully" });
+    return;
+})
 
 
 app.listen(port, () => {
