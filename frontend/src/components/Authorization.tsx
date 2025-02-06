@@ -2,6 +2,7 @@ import '../styles/Authorization.css'
 
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function Authorization() {
 
@@ -70,6 +71,7 @@ export default function Authorization() {
                 {error && <p style={{ color: 'red' }}>{error}</p>}
                 <button type="submit" className={"my-3"}>Log in</button>
             </form>
+            <Link to="/reset-password">Forgot the password?</Link>
         </div>
     )
 }
