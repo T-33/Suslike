@@ -90,6 +90,17 @@ app.post("/register", (req: Request, res: Response)=> {
     return;
 })
 
+app.post('/login', (req: Request, res: Response) => {
+    const{username, password} = req.body;
+    const users = readUsers();
+
+    const user = users.find((user) => user.username === username);
+    if(!user || user.password !== password){
+        res.status(401).json({error: "Incorrect username or password" });
+        return;
+    }
+    res.json({ message: "Login successful", user });
+})
 
 
 
