@@ -11,7 +11,7 @@ export default function Registration() {
     const [usernameError, setUsernameError] = useState<string | null>(null);
     const [passwordError, setPasswordError] = useState<string | null>(null);
     const [zodiacSign, setZodiacSign] = useState<string | null>(null);
-    const [dateInput, setDateInput] = useState('');
+    const [dateOfBirth, setDateOfBirth] = useState('');
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
@@ -42,15 +42,40 @@ export default function Registration() {
 
     const formatDateInput = (input: string) => {
         const numbers = input.replace(/\D/g, '');
-        if (numbers.length <= 4) return numbers;
-        if (numbers.length <= 6) return `${numbers.slice(0, 4)}-${numbers.slice(4)}`;
-        return `${numbers.slice(0, 4)}-${numbers.slice(4, 6)}-${numbers.slice(6, 8)}`;
+
+        if (numbers.length >= 5) {
+            const year = numbers.slice(0, 4);
+            let month = numbers.slice(4, 6);
+            let day = numbers.slice(6, 8);
+
+            if (month.length === 1 && parseInt(month) > 1) {
+                month = `0${month}`;
+            }
+
+            const monthNum = parseInt(month);
+            if (monthNum < 1 || monthNum > 12) {
+                month = month.slice(0, 1);
+            }
+
+            const daysInMonth = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            const dayNum = parseInt(day);
+            const maxDaysInMonth = daysInMonth[monthNum - 1];
+
+            if (dayNum > maxDaysInMonth) {
+                day = day.slice(0, 1);
+            }
+
+            return `${year}${month ? `-${month}` : ''}${day ? `-${day}` : ''}`;
+        }
+        return numbers;
     };
 
     const handleRawDateInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const input = e.target.value;
+        const input = e.target.value.replace(/\D/g, '');
         const formatted = formatDateInput(input);
-        setDateInput(formatted);
+
+        e.target.value = formatted;
+        setDateOfBirth(formatted);
 
         if (/^\d{4}-\d{2}-\d{2}$/.test(formatted)) {
             const date = new Date(formatted);
@@ -58,6 +83,8 @@ export default function Registration() {
                 setFormData(prev => ({ ...prev, date_of_birth: formatted }));
                 setZodiacSign(getZodiacSign(formatted));
             }
+        } else {
+            setZodiacSign(null);
         }
     };
 
@@ -66,7 +93,7 @@ export default function Registration() {
             const formattedDate = date.toISOString().split('T')[0];
             setFormData(prev => ({ ...prev, date_of_birth: formattedDate }));
             setZodiacSign(getZodiacSign(formattedDate));
-            setDateInput(formattedDate);
+            setDateOfBirth(formattedDate);
         }
     };
 
@@ -85,7 +112,7 @@ export default function Registration() {
             ...formData,
             username: formData.username.toLowerCase(),
             zodiacSign: zodiacSign || "",
-            registrationDate: new Date().toISOString()
+            registrationDate: new Date().toISOString().split('T')[0],
         };
 
         try {
@@ -147,20 +174,20 @@ export default function Registration() {
                 <div>
                     <label>Birthdate: </label>
                     <DatePicker
-                        selected={formData.date_of_birth ? new Date(formData.date_of_birth) : null}
+                        selected={dateOfBirth && /^\d{4}-\d{2}-\d{2}$/.test(dateOfBirth) ? new Date(dateOfBirth) : null}
                         onChange={handleDateChange}
+                        customInput={<input value={dateOfBirth} onChange={handleRawDateInput} placeholder="YYYY-MM-DD" />}
+                        onChangeRaw={(e) => {
+                            if (!e || !(e.target instanceof HTMLInputElement)) return;
+                            handleRawDateInput(e as unknown as React.ChangeEvent<HTMLInputElement>);
+                        }}
                         dateFormat="yyyy-MM-dd"
                         placeholderText="YYYY-MM-DD"
                         showYearDropdown
                         showMonthDropdown
                         dropdownMode="select"
-                        value={dateInput}
-                        customInput={<input value={dateInput} onChange={handleRawDateInput} placeholder="YYYY-MM-DD" />}
-                        onChangeRaw={(e) => {
-                            handleRawDateInput(e as unknown as React.ChangeEvent<HTMLInputElement>);
-                        }}
+                        maxDate={new Date()}
                     />
-
                 </div>
 
                 <div>
