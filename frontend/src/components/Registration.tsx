@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
-import {User} from '../types/User.ts';
-import {getZodiacSign} from "../../utils/zodiac.ts";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+
+import {User} from '../types/User.ts';
+import {getZodiacSign} from "../../utils/zodiac.ts";
+import {relationship_statuses} from "../../utils/relationship_statuses.ts";
 
 export default function Registration() {
     const [formData, setFormData] = useState<Partial<User>>({});
@@ -13,6 +15,8 @@ export default function Registration() {
     const [zodiacSign, setZodiacSign] = useState<string | null>(null);
     const [dateOfBirth, setDateOfBirth] = useState('');
     const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+    const [relationshipStatus, setRelationshipStatus] = useState<string | null>(null);
+
 
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) =>  {
         const file = e.target.files?.[0];
@@ -241,6 +245,22 @@ export default function Registration() {
 
                 <div>
                     <label>Zodiac Sign: {zodiacSign}</label>
+                </div>
+
+                <div>
+                    <label>Marital Status: </label>
+                    <select
+                        value={relationshipStatus || ""}
+                        onChange={(e) => {
+                            setRelationshipStatus(e.target.value);
+                            setFormData(prev => ({ ...prev, relationship_status: e.target.value }));
+                        }}
+                    >
+                        <option className="bg-white text-black" value="" disabled>Select your status</option>
+                        {relationship_statuses.map(status => (
+                            <option key={status.value} className="bg-gray-700 text-white" value={status.value}>{status.label}</option>
+                        ))}
+                    </select>
                 </div>
 
                 <div>
