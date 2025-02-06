@@ -5,6 +5,7 @@ export type User = {
     date_of_birth?: string;
     password: string;
     profile_picture_url?: string;
+    zodiacSing? : string;
     includeZodiacSignFlag?: boolean;
     relationship_status?: string;
     followers?: number;
