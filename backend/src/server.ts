@@ -28,7 +28,19 @@ function writeUsers(users: User[]): void {
 }
 
 app.post("/register", (req: Request, res: Response)=> {
+    console.log('Received registration data:', req.body);
     const newUser : User = req.body;
+
+    if (!newUser.username || !newUser.password) {
+        res.status(400).json({error: 'Username and password are required'});
+        return;
+    }
+
+    if (newUser.password.length < 6) {
+        res.status(400).json({error: 'Password must be at least 6 characters long'});
+        return;
+    }
+
     const users = readUsers();
 
     const isUsernameTaken = users.some((user) => user.username === newUser.username);

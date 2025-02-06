@@ -5,9 +5,30 @@ export default function Registration() {
     const [formData, setFormData] = useState<Partial<User>>({});
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
+    const [usernameError, setUsernameError] = useState<string | null>(null);
+    const [passwordError, setPasswordError] = useState<string | null>(null);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
+
+        if (name === "username") {
+            const regex = /^[a-zA-Z0-9_]*$/;
+            if (!regex.test(value)) {
+                setUsernameError("Only English letters, numbers, and underscores are allowed");
+                return;
+            } else {
+                setUsernameError(null);
+            }
+        }
+
+        if(name === "password") {
+            if(value.length < 6){
+                setPasswordError('Password must be at least 6 characters long');
+            } else{
+                setPasswordError(null)
+            }
+        }
+
         setFormData({
             ...formData,
             [name]: value
@@ -19,14 +40,19 @@ export default function Registration() {
         setError(null);
         setSuccess(null);
 
+        if (!formData.username || !formData.password) {
+            setError('Username and password are required');
+            return;
+        }
+
         try {
             const response = await fetch('http://localhost:3001/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData)
-            })
+                body: JSON.stringify(formData),
+            });
 
             const data = await response.json();
             if (!response.ok) {
@@ -60,10 +86,13 @@ export default function Registration() {
                 <div>
                     <label>Username: </label>
                     <input
+                        required
                         type="text"
                         name="username"
                         value={formData.username || ''}
+                        pattern="[a-zA-Z0-9_]+"
                         onChange={handleInputChange}/>
+                    {usernameError && <p style={{ color: 'red', fontSize: '12px' }}>{usernameError}</p>}
                 </div>
 
                 <div>
@@ -78,13 +107,15 @@ export default function Registration() {
                 <div>
                     <label>Password: </label>
                     <input
+                        required
                         type="password"
                         name="password"
                         value={formData.password || ''}
                         onChange={handleInputChange}/>
+                    {passwordError && <p style={{ color: 'red', fontSize: '12px' }}>{passwordError}</p>}
                 </div>
 
-                <button type='submit'>Register</button>
+                <button type='submit'  disabled={!!error}>Register</button>
             </form>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             {success && <p style={{ color: 'green' }}>{success}</p>}
