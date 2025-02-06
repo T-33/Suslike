@@ -10,21 +10,36 @@ export default function Authorization() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if(username === "aisha" && password === "qwerty"){
-            navigate("/user")
-        } else{
-            setError("Incorrect username or password");
+        try{
+            const response = await fetch('http://localhost:3001/login', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username, password})
+            });
+
+            const data = await response.json();
+            if(!response.ok){
+                throw new Error(data.error || 'Login failed.');
+            }
+
+            localStorage.setItem('user', JSON.stringify(data.user));
+            navigate('/user'); // TODO настроить страницу пользователя
+
+        } catch (error){
+            if (error instanceof Error) {
+                setError(error.message);
+            } else {
+                setError('An unknown error occurred');
+            }
         }
     }
 
     return (
         <div className="auth-block">
-            <h1 className={"text-5xl my-5"}>
-                Suslik
-            </h1>
+            <h1 className={"text-5xl my-5"}>SUSlike</h1>
             <h2 className={"text-3xl my-3.5"}>Authorization</h2>
 
             <form onSubmit={handleSubmit}>
