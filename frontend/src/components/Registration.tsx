@@ -14,6 +14,33 @@ export default function Registration() {
     const [dateOfBirth, setDateOfBirth] = useState('');
     const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) =>  {
+        const file = e.target.files?.[0];
+        if(file){
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try{
+                const response = await fetch("http://localhost:3001/upload", {
+                    method: "POST",
+                    body: formData,
+                });
+
+                const data = await response.json();
+                if(data.url){
+                    setAvatarUrl(data.url);
+                    setFormData((prev) => ({
+                        ...prev,
+                        profile_picture_url: data.url
+                    }))
+                }
+            }catch (error){
+                console.log(error)
+            }
+        }
+
+    }
+
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
 
@@ -148,7 +175,7 @@ export default function Registration() {
                         accept="image/*"
                         id="avatar-upload"
                         className="hidden"
-                        // onChange={handleFileChange}
+                        onChange={handleFileChange}
                         capture="user"
                     />
                     <label
