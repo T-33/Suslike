@@ -5,12 +5,14 @@ import cors from 'cors';
 
 import {User} from '../types/User'
 
+import bodyParser from "body-parser";
+
 const app = express();
 app.use(cors());
 const port = 3001;
 
-const FILE_PATH = path.join(__dirname, "../data/users.json");
-
+const FILE_PATH = path.join(__dirname, '../../data/users.json');
+app.use(bodyParser.json());
 app.use(express.json());
 
 function readUsers(): User[] {

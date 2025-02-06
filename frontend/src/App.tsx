@@ -2,8 +2,9 @@ import '../src/styles/App.css'
 import Authorization from './components/Authorization.tsx'
 import Home from './components/Home.tsx'
 import UserProfile from './components/UserProfile.tsx'
-// import NotFound from './components/NotFound.tsx'
-import Registration from './components/Authorization.tsx'
+import NotFound from './components/NotFound.tsx'
+import Registration from './components/Registration.tsx'
+
 
 import {
     BrowserRouter as Router,
@@ -28,6 +29,9 @@ function AppContent() {
                         <li>
                             <Link to="/authorization">Authorize</Link>
                         </li>
+                        <li>
+                            <Link to={"/register"} >Register </Link>
+                        </li>
                     </ul>
                 </nav>
             )}
@@ -36,7 +40,7 @@ function AppContent() {
                 <Route path="/authorization" element={<Authorization />} />
                 <Route path="/" element={<Home />} />
                 <Route path="/user/:userId" element={<UserProfile />}/>
-                {/*<Route path="*" element={<NotFound />} />*/}
+                <Route path="*" element={<NotFound />} />
                 <Route path="/register" element={<Registration />} />
             </Routes>
         </>
