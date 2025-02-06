@@ -1,17 +1,29 @@
 import React, {useState} from "react";
 
-export default function ResetPassword(){
+export default function ResetPassword() {
     const [username, setUsername] = useState("");
     const [newPassword, setNewPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [message, setMessage] = useState("");
 
-    const handleResetPassword = async (event : React.FormEvent) => {
+    const handleResetPassword = async (event: React.FormEvent) => {
         event.preventDefault();
+
+
+        if (newPassword.length < 6) {
+            setMessage('Password must be at least 6 characters long');
+            return;
+        }
+
+        if (newPassword !== confirmPassword) {
+            setMessage("Passwords do not match!");
+            return;
+        }
 
         const response = await fetch("http://localhost:3001/reset-password", {
             method: "POST",
             headers: {"Content-Type": "application/json",},
-            body: JSON.stringify({})
+            body: JSON.stringify({username, newPassword})
         })
 
         const data = await response.json();
@@ -40,6 +52,18 @@ export default function ResetPassword(){
                         id="newPassword"
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
+                        required
+                        className="border"
+                    />
+                </div>
+
+                <div>
+                    <label htmlFor="confirmPassword">Confirm Password: </label>
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                         required
                         className="border"
                     />
