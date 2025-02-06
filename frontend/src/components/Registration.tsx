@@ -12,6 +12,7 @@ export default function Registration() {
     const [passwordError, setPasswordError] = useState<string | null>(null);
     const [zodiacSign, setZodiacSign] = useState<string | null>(null);
     const [dateOfBirth, setDateOfBirth] = useState('');
+    const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
@@ -139,8 +140,29 @@ export default function Registration() {
 
     return (
         <div>
-            <h1>Registration</h1>
+            <h1 className="text-4xl my-3">Registration</h1>
             <form onSubmit={handleSubmit}>
+                <div>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        id="avatar-upload"
+                        className="hidden"
+                        // onChange={handleFileChange}
+                        capture="user"
+                    />
+                    <label
+                        htmlFor="avatar-upload"
+                        className="w-24 h-24 rounded-full border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer hover:border-gray-400"
+                    >
+                        {avatarUrl ? (
+                            <img src={avatarUrl} alt="Avatar preview" className="w-24 h-24 rounded-full object-cover" />
+                        ) : (
+                            <span className="text-3xl text-gray-400">+</span>
+                        )}
+                    </label>
+                </div>
+
                 <div>
                     <label>Full Name: </label>
                     <input
@@ -205,7 +227,7 @@ export default function Registration() {
                     {passwordError && <p style={{color: 'red', fontSize: '12px'}}>{passwordError}</p>}
                 </div>
 
-                <button type='submit' disabled={!!error}>Register</button>
+                <button type='submit'>Register</button>
             </form>
             {error && <p style={{color: 'red'}}>{error}</p>}
             {success && <p style={{color: 'green'}}>{success}</p>}
