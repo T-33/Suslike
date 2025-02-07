@@ -7,6 +7,7 @@ export const relationship_statuses = [
     { value: "divorced", label: "Divorced" },
     { value: "widowed", label: "Widowed" },
     { value: "complicated", label: "It's complicated" },
+    { value: "actively_looking", label: "Actively looking" },
     { value: "separated", label: "Separated" },
     { value: "prefer_not_to_say", label: "Prefer not to say" }
 ];
