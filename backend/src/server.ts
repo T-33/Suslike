@@ -17,6 +17,7 @@ app.use(cors());
 const port = 3001;
 const FILE_PATH = path.join(__dirname, '../../data/users.json');
 const UPLOADS_DIR = path.join(__dirname, '../../data/user_avatars');
+const BANNERS_DIR = path.join(__dirname, '../../data/user_banners');
 
 if (!fs.existsSync(UPLOADS_DIR)) {
     fs.mkdirSync(UPLOADS_DIR);
@@ -47,6 +48,29 @@ function writeUsers(users: User[]): void {
     fs.writeFileSync(FILE_PATH, JSON.stringify(users, null, 2));
 }
 
+/**
+ * Finds user by username.
+ * @param username
+ * @return user with same username as specified or null if no such user exist.
+ */
+function findUser(username: string): User | undefined {
+    const allUsers = readUsers();
+
+    return allUsers.find(user => user.username == username);
+}
+
+app.get('/api/users/:username', (req, res) => {
+   const username = req.params.username;
+   const foundUser = findUser(username)
+
+    if(foundUser == undefined) {
+        res.status(404).json({error: 'No such user'});
+    } else {
+        console.log({foundUser})
+        res.json(foundUser)
+    }
+})
+
 app.post('/upload', upload.single("file"), (req: Request, res: Response) => {
     if(!req.file){
         res.status(400).json({error: 'No file uploaded'});
@@ -58,11 +82,15 @@ app.post('/upload', upload.single("file"), (req: Request, res: Response) => {
 });
 
 app.use("/uploads", express.static(UPLOADS_DIR));
-
+app.use("/uploads/banners", express.static(BANNERS_DIR));
 
 app.post("/register", (req: Request, res: Response)=> {
     console.log('Received registration data:', req.body);
     const newUser : User = req.body;
+
+    newUser.background_picture_url = 'http://localhost:3001/uploads/banners/default_banner.jpg';
+    newUser.following = 0;
+    newUser.followers = 0;
 
     if (!newUser.username || !newUser.password) {
         res.status(400).json({error: 'Username and password are required'});
