@@ -21,6 +21,7 @@
   },
   {
     "profile_picture_url": "http://localhost:3001/uploads/1738917634505-852287239.png",
+    "background_picture_url": "http://localhost:3001/uploads/1738917634505-852287239.png",
     "full_name": "Daniyar",
     "username": "daniyar",
     "date_of_birth": "2006-02-07",
@@ -28,5 +29,33 @@
     "zodiacSign": "Aquarius",
     "registrationDate": "2025-02-07",
     "user_id": 4
+  },
+  {
+    "password": "123456",
+    "profile_picture_url": "http://localhost:3001/uploads/1739000402357-513058579.png",
+    "full_name": "vfg",
+    "username": "timoxa",
+    "email": "timoxatimoxa@gmail.com",
+    "date_of_birth": "2025-01-28",
+    "relationship_status": "in_relationship",
+    "zodiacSign": "Aquarius",
+    "registrationDate": "2025-02-08",
+    "background_picture_url": "http://localhost:3001/uploads/banners/default_banner.jpg",
+    "user_id": 5
+  },
+  {
+    "password": "123456",
+    "profile_picture_url": "http://localhost:3001/uploads/1739000973522-728120823.png",
+    "full_name": "aisha",
+    "username": "aisha",
+    "email": "aisha@alatoo.kg",
+    "date_of_birth": "2025-01-29",
+    "relationship_status": "single",
+    "zodiacSign": "Aquarius",
+    "registrationDate": "2025-02-08",
+    "background_picture_url": "http://localhost:3001/uploads/banners/default_banner.jpg",
+    "following": 0,
+    "followers": 0,
+    "user_id": 6
   }
 ]

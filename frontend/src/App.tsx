@@ -40,7 +40,7 @@ function AppContent() {
             <Routes>
                 <Route path="/authorization" element={<Authorization />} />
                 <Route path="/" element={<Home />} />
-                <Route path="/user/:userId" element={<UserProfile />}/>
+                <Route path="/user/:username" element={<UserProfile />}/>
                 <Route path="*" element={<NotFound />} />
                 <Route path="/register" element={<Registration />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
