@@ -156,11 +156,11 @@ export default function Registration() {
                 profilePictureUrl = await uploadFile(selectedFile);
             }
 
-            const preparedData = {
+            const preparedData: Partial<User> = {
                 ...formData,
                 username: formData.username.toLowerCase(),
-                zodiacSign: zodiacSign || "",
-                registrationDate: new Date().toISOString().split('T')[0],
+                zodiac_sing: zodiacSign || "",
+                registration_date: new Date().toISOString().split('T')[0],
                 followers: 0,
                 following: 0,
                 profile_picture_url: profilePictureUrl,
@@ -180,7 +180,7 @@ export default function Registration() {
             setSuccess("User successfully registered");
             console.log("Successfully registered" + data);
 
-            const username: string = preparedData.username;
+            const username: string = preparedData.username as string;
             navigate(`/user/${username}`);
 
         } catch (error) {
