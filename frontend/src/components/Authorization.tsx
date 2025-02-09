@@ -27,7 +27,7 @@ export default function Authorization() {
             }
 
             localStorage.setItem('user', JSON.stringify(data.user));
-            navigate('/user'); // TODO настроить страницу пользователя
+            navigate(`/user/${username}`);
 
         } catch (error){
             if (error instanceof Error) {

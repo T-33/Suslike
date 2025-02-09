@@ -57,5 +57,47 @@
     "following": 0,
     "followers": 0,
     "user_id": 6
+  },
+  {
+    "password": "123456",
+    "profile_picture_url": "http://localhost:3001/uploads/1739099238275-228595372.png",
+    "full_name": "dfdf",
+    "username": "baklan",
+    "email": "baklan@baklanski.org",
+    "date_of_birth": "2025-01-27",
+    "relationship_status": "single",
+    "zodiacSign": "Aquarius",
+    "registrationDate": "2025-02-09",
+    "background_picture_url": "http://localhost:3001/uploads/banners/default_banner.jpg",
+    "following": 0,
+    "followers": 0,
+    "user_id": 7
+  },
+  {
+    "password": "#E3f!s,Dac2@kGt",
+    "profile_picture_url": "http://localhost:3001/uploads/1739099348682-519277110.png",
+    "full_name": "dfsd",
+    "username": "qwerty",
+    "zodiacSign": "",
+    "registrationDate": "2025-02-09",
+    "background_picture_url": "http://localhost:3001/uploads/banners/default_banner.jpg",
+    "following": 0,
+    "followers": 0,
+    "user_id": 8
+  },
+  {
+    "password": "123456",
+    "profile_picture_url": "http://localhost:3001/uploads/1739099359090-648045314.png",
+    "full_name": "qwert",
+    "username": "ololo",
+    "email": "timurrahmatullaev703@gmail.com",
+    "date_of_birth": "2025-01-28",
+    "relationship_status": "married",
+    "zodiacSign": "Aquarius",
+    "registrationDate": "2025-02-09",
+    "background_picture_url": "http://localhost:3001/uploads/banners/default_banner.jpg",
+    "following": 0,
+    "followers": 0,
+    "user_id": 9
   }
 ]

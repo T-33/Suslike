@@ -1,11 +1,14 @@
 import {Link, useParams} from "react-router-dom";
 import NotFound from "./NotFound.tsx";
+import Loading from "./Loading.tsx"
 import {User} from "../types/User.ts"
 import {useState, useEffect} from "react";
 
 export default function UserProfile() {
     const {username} = useParams<{username : string}>();
     const [userProfile, setUserProfile] = useState<User | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [errorFetchingUser, setErrorFetchingUser] = useState(true)
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -15,8 +18,9 @@ export default function UserProfile() {
                const url = `http://localhost:3001/api/users/${username}`
                const response = await fetch(url);
                const data = await response.json();
-
                setUserProfile(data);
+
+               setLoading(false)
            } catch(error) {
                console.log("Error fetching user:", error);
            }
@@ -24,13 +28,9 @@ export default function UserProfile() {
         fetchUser();
         }, [username])
 
-
-
     if (userProfile == null) {
         return <NotFound/>
     }
-
-    console.log("bg " + userProfile.background_picture_url)
     return (
         <div className="w-1/2 mx-auto flex flex-col border border-solid border-gray-200">
             <header className="flex">

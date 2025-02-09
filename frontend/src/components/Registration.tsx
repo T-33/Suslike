@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import {User} from '../types/User.ts';
 import {getZodiacSign} from "../../utils/zodiac.ts";
 import {relationship_statuses} from "../../utils/relationship_statuses.ts";
+import {useNavigate} from "react-router-dom";
 
 export default function Registration() {
     const [formData, setFormData] = useState<Partial<User>>({});
@@ -17,6 +18,7 @@ export default function Registration() {
     const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
     const [relationshipStatus, setRelationshipStatus] = useState<string | null>(null);
 
+    const navigate = useNavigate();
 
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) =>  {
         const file = e.target.files?.[0];
@@ -160,6 +162,10 @@ export default function Registration() {
             }
             setSuccess("User successfully registered");
             console.log("Successfully registered" + data);
+
+            const username: string = preparedData.username;
+            navigate(`/user/${username}`);
+
         } catch (error) {
             if (error instanceof Error) {
                 setError(error.message);
