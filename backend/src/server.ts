@@ -84,13 +84,21 @@ app.post('/upload', upload.single("file"), (req: Request, res: Response) => {
 app.use("/uploads", express.static(UPLOADS_DIR));
 app.use("/uploads/banners", express.static(BANNERS_DIR));
 
+function generateNumericUserId(): number {
+    return Math.floor(100000 + Math.random() * 900000);
+}
+
+function generateUniqueNumericUserId(users: User[]): number {
+    let id : number;
+    do {
+        id = generateNumericUserId();
+    } while (users.some(user => user.user_id === id));
+    return id;
+}
+
 app.post("/register", (req: Request, res: Response)=> {
     console.log('Received registration data:', req.body);
     const newUser : User = req.body;
-
-    newUser.background_picture_url = 'http://localhost:3001/uploads/banners/default_banner.jpg';
-    newUser.following = 0;
-    newUser.followers = 0;
 
     if (!newUser.username || !newUser.password) {
         res.status(400).json({error: 'Username and password are required'});
@@ -110,7 +118,7 @@ app.post("/register", (req: Request, res: Response)=> {
         return;
     }
 
-    newUser.user_id = users.length + 1;
+    newUser.user_id = generateUniqueNumericUserId(users);
     users.push(newUser);
     writeUsers(users);
 
