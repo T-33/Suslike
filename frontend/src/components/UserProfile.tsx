@@ -8,7 +8,7 @@ export default function UserProfile() {
     const {username} = useParams<{username : string}>();
     const [userProfile, setUserProfile] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
-    const [errorFetchingUser, setErrorFetchingUser] = useState(true)
+    const [errorFetchingUser, setErrorFetchingUser] = useState(false)
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -17,20 +17,26 @@ export default function UserProfile() {
                 //TODO extract into environment variable
                const url = `http://localhost:3001/api/users/${username}`
                const response = await fetch(url);
-               const data = await response.json();
-               setUserProfile(data);
 
-               setLoading(false)
+               if(response.ok) {
+                   const data = await response.json();
+                   setUserProfile(data);
+                   setLoading(false)
+               } else {
+                   setErrorFetchingUser(true);
+               }
            } catch(error) {
                console.log("Error fetching user:", error);
+               setErrorFetchingUser(true);
            }
         }
         fetchUser();
         }, [username])
 
-    if (userProfile == null) {
+    if (userProfile == null || errorFetchingUser) {
         return <NotFound/>
     }
+
     return (
         <div className="w-1/2 mx-auto flex flex-col border border-solid border-gray-200">
             <header className="flex">
