@@ -15,37 +15,45 @@ export default function Registration() {
     const [passwordError, setPasswordError] = useState<string | null>(null);
     const [zodiacSign, setZodiacSign] = useState<string | null>(null);
     const [dateOfBirth, setDateOfBirth] = useState('');
-    const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
     const [relationshipStatus, setRelationshipStatus] = useState<string | null>(null);
+
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+    const DEFAULT_BANNER_URL = 'http://localhost:3001/uploads/banners/default_banner.jpg';
+
 
     const navigate = useNavigate();
 
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) =>  {
         const file = e.target.files?.[0];
-        if(file){
-            const formData = new FormData();
-            formData.append('file', file);
-
-            try{
-                const response = await fetch("http://localhost:3001/upload", {
-                    method: "POST",
-                    body: formData,
-                });
-
-                const data = await response.json();
-                if(data.url){
-                    setAvatarUrl(data.url);
-                    setFormData((prev) => ({
-                        ...prev,
-                        profile_picture_url: data.url
-                    }))
-                }
-            }catch (error){
-                console.log(error)
-            }
+        if (file) {
+            setSelectedFile(file);
+            const fileUrl = URL.createObjectURL(file);
+            setPreviewUrl(fileUrl);
         }
-
     }
+
+    const uploadFile = async (file: File) => {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const response = await fetch("http://localhost:3001/upload", {
+                method: "POST",
+                body: formData,
+            });
+
+            const data = await response.json();
+            if (data.url) {
+                return data.url;
+            }
+            throw new Error('Failed to upload file');
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
@@ -142,14 +150,23 @@ export default function Registration() {
             return;
         }
 
-        const preparedData = {
-            ...formData,
-            username: formData.username.toLowerCase(),
-            zodiacSign: zodiacSign || "",
-            registrationDate: new Date().toISOString().split('T')[0],
-        };
-
         try {
+            let profilePictureUrl = null;
+            if (selectedFile) {
+                profilePictureUrl = await uploadFile(selectedFile);
+            }
+
+            const preparedData = {
+                ...formData,
+                username: formData.username.toLowerCase(),
+                zodiacSign: zodiacSign || "",
+                registrationDate: new Date().toISOString().split('T')[0],
+                followers: 0,
+                following: 0,
+                profile_picture_url: profilePictureUrl,
+                background_picture_url: DEFAULT_BANNER_URL,
+            };
+
             const response = await fetch('http://localhost:3001/register', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -192,8 +209,8 @@ export default function Registration() {
                         htmlFor="avatar-upload"
                         className="w-24 h-24 rounded-full border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer hover:border-gray-400"
                     >
-                        {avatarUrl ? (
-                            <img src={avatarUrl} alt="Avatar preview" className="w-24 h-24 rounded-full object-cover" />
+                        {previewUrl ? (
+                            <img src={previewUrl} alt="Avatar preview" className="w-24 h-24 rounded-full object-cover"/>
                         ) : (
                             <span className="text-3xl text-gray-400">+</span>
                         )}
