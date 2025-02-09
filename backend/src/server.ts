@@ -1,8 +1,9 @@
-import express, { Request, Response } from 'express';
+import express, {Request, Response} from 'express';
 import fs from 'fs';
 import path from 'path';
 import cors from 'cors';
 import bodyParser from "body-parser";
+import bcrypt from 'bcrypt';
 
 import multer from "multer";
 
@@ -96,29 +97,37 @@ function generateUniqueNumericUserId(users: User[]): number {
     return id;
 }
 
-app.post("/register", (req: Request, res: Response)=> {
+app.post("/register", async (req: Request, res: Response)=> {
     console.log('Received registration data:', req.body);
-    const newUser : User = req.body;
+    const { username, password, ...otherFields } = req.body;
 
-    if (!newUser.username || !newUser.password) {
+    if (!username || !password) {
         res.status(400).json({error: 'Username and password are required'});
         return;
     }
 
-    if (newUser.password.length < 6) {
+    if (password.length < 6) {
         res.status(400).json({error: 'Password must be at least 6 characters long'});
         return;
     }
 
     const users = readUsers();
 
-    const isUsernameTaken = users.some((user) => user.username === newUser.username);
+    const isUsernameTaken = users.some((user) => user.username === username);
     if(isUsernameTaken){
         res.status(400).json({error: 'Username already taken'});
         return;
     }
 
-    newUser.user_id = generateUniqueNumericUserId(users);
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser: User = {
+        user_id: generateUniqueNumericUserId(users),
+        username,
+        password: hashedPassword,
+        ...otherFields
+    };
+
     users.push(newUser);
     writeUsers(users);
 
@@ -126,19 +135,27 @@ app.post("/register", (req: Request, res: Response)=> {
     return;
 })
 
-app.post('/login', (req: Request, res: Response) => {
+app.post('/login', async (req: Request, res: Response) => {
     const{username, password} = req.body;
     const users = readUsers();
 
     const user = users.find((user) => user.username === username);
-    if(!user || user.password !== password){
-        res.status(401).json({error: "Incorrect username or password" });
+    if (!user) {
+        res.status(401).json({ error: "Non-existent user" });
         return;
     }
-    res.json({ message: "Login successful", user });
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+        res.status(401).json({ error: "Incorrect password" });
+        return;
+    }
+
+    const { password: _, ...userData } = user;
+    res.json({ message: "Login successful", user: userData });
 })
 
-app.post('/reset-password', (req: Request, res: Response) => {
+app.post('/reset-password', async (req: Request, res: Response) => {
     const{username, newPassword} = req.body;
     let users = readUsers();
 
@@ -148,7 +165,12 @@ app.post('/reset-password', (req: Request, res: Response) => {
         return;
     }
 
-    users[userIndex].password = newPassword;
+    if (newPassword.length < 6) {
+        res.status(400).json({ error: 'Password must be at least 6 characters long' });
+        return;
+    }
+
+    users[userIndex].password = await bcrypt.hash(newPassword, 10);
     writeUsers(users);
 
     res.json({ message: "Password updated successfully" });
