@@ -5,6 +5,7 @@ import UserProfile from './components/UserProfile.tsx'
 import NotFound from './components/NotFound.tsx'
 import Registration from './components/Registration.tsx'
 import ResetPassword from './components/ResetPassword.tsx'
+import AddPostForm from "./components/AddPost.tsx";
 
 
 import {
@@ -33,6 +34,9 @@ function AppContent() {
                         <li>
                             <Link to={"/register"} >Register </Link>
                         </li>
+                        <li>
+                            <Link to={"/add-post"}>Add post</Link>
+                        </li>
                     </ul>
                 </nav>
             )}
@@ -44,6 +48,7 @@ function AppContent() {
                 <Route path="*" element={<NotFound />} />
                 <Route path="/register" element={<Registration />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
+                <Route path="/add-post" element={<AddPostForm/>} />
             </Routes>
         </>
     )
