@@ -108,15 +108,11 @@ app.use("/uploads/posts", express.static(POSTS_DIR));
 app.use("/uploads", express.static(UPLOADS_DIR));
 app.use("/uploads/banners", express.static(BANNERS_DIR));
 
-function generateNumericUserId(): number {
-    return Math.floor(100000 + Math.random() * 900000);
-}
-
-function generateUniqueNumericUserId(users: User[]): number {
-    let id : number;
+function generateUniqueId <T extends { user_id?: number; post_id?: number }> (items: T[], idField: keyof T): number {
+    let id: number;
     do {
-        id = generateNumericUserId();
-    } while (users.some(user => user.user_id === id));
+        id = Math.floor(100000 + Math.random() * 900000);
+    } while (items.some((item) => item[idField] === id));
     return id;
 }
 
@@ -145,7 +141,7 @@ app.post("/register", async (req: Request, res: Response)=> {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser: User = {
-        user_id: generateUniqueNumericUserId(users),
+        user_id: generateUniqueId(users, 'user_id'),
         username,
         password: hashedPassword,
         ...otherFields
@@ -228,7 +224,7 @@ app.post('/posts', (req: Request, res: Response) => {
 
     const posts = readPosts();
     const newPost: Post = {
-        post_id: posts.length + 1,
+        post_id: generateUniqueId(posts, 'post_id'),
         ...otherFields,
     };
 
