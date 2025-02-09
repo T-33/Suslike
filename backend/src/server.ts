@@ -7,7 +7,8 @@ import bcrypt from 'bcrypt';
 
 import multer from "multer";
 
-import {User} from '../types/User'
+import {User} from '../types/User';
+import {Post} from '../types/Post';
 
 
 const app = express();
@@ -16,13 +17,34 @@ app.use(express.json());
 app.use(cors());
 
 const port = 3001;
+
 const FILE_PATH = path.join(__dirname, '../../data/users.json');
+const POSTS_FILE_PATH = path.join(__dirname, '../../data/posts.json');
+
 const UPLOADS_DIR = path.join(__dirname, '../../data/user_avatars');
+const POSTS_DIR = path.join(__dirname, '../../data/posts');
 const BANNERS_DIR = path.join(__dirname, '../../data/user_banners');
 
 if (!fs.existsSync(UPLOADS_DIR)) {
     fs.mkdirSync(UPLOADS_DIR);
 }
+
+if (!fs.existsSync(POSTS_DIR)) {
+    fs.mkdirSync(POSTS_DIR);
+}
+
+const postStorage = multer.diskStorage({
+    destination: (req, file, callback) => {
+        callback(null, POSTS_DIR);
+    },
+    filename: (req, file, callback) => {
+        const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+        callback(null, uniqueSuffix + path.extname(file.originalname));
+    }
+});
+
+const uploadPostMedia = multer({ storage: postStorage });
+
 
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
@@ -82,6 +104,7 @@ app.post('/upload', upload.single("file"), (req: Request, res: Response) => {
     res.json({url: fileUrl});
 });
 
+app.use("/uploads/posts", express.static(POSTS_DIR));
 app.use("/uploads", express.static(UPLOADS_DIR));
 app.use("/uploads/banners", express.static(BANNERS_DIR));
 
