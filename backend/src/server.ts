@@ -201,6 +201,44 @@ app.post('/reset-password', async (req: Request, res: Response) => {
 })
 
 
+function readPosts(): Post[] {
+    if (!fs.existsSync(POSTS_FILE_PATH)) {
+        fs.writeFileSync(POSTS_FILE_PATH, JSON.stringify([]));
+    }
+    const data = fs.readFileSync(POSTS_FILE_PATH, 'utf-8');
+    return JSON.parse(data);
+}
+
+function writePosts(posts: Post[]): void {
+    fs.writeFileSync(POSTS_FILE_PATH, JSON.stringify(posts, null, 2));
+}
+
+app.post('/posts-upload', uploadPostMedia.single('file'), (req: Request, res: Response) => {
+    if (!req.file) {
+        res.status(400).json({ error: 'No file uploaded' });
+        return;
+    }
+    const fileUrl = `http://localhost:${port}/uploads/posts/${req.file.filename}`;
+    res.json({ url: fileUrl });
+});
+
+
+app.post('/posts', (req: Request, res: Response) => {
+    const {post_id, ...otherFields } = req.body;
+
+    const posts = readPosts();
+    const newPost: Post = {
+        post_id: posts.length + 1,
+        ...otherFields,
+    };
+
+    posts.push(newPost);
+    writePosts(posts);
+
+    res.status(201).json({ message: 'Post created successfully', post: newPost });
+});
+
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
