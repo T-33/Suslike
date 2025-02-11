@@ -82,6 +82,19 @@ function findUser(username: string): User | undefined {
     return allUsers.find(user => user.username == username);
 }
 
+/**
+ * Finds users by piece of username.
+ * @param username
+ * @return List of users whose usernames contain specified string.
+ */
+function findUsers(query: string): User[] {
+    const allUsers = readUsers();
+
+    return allUsers.filter(user => {
+        return user.username.toLowerCase().includes(query.toLowerCase());
+    });
+}
+
 app.get('/api/users/:username', (req, res) => {
    const username = req.params.username;
    const foundUser = findUser(username)
@@ -89,9 +102,14 @@ app.get('/api/users/:username', (req, res) => {
     if(foundUser == undefined) {
         res.status(404).json({error: 'No such user'});
     } else {
-        console.log({foundUser})
         res.json(foundUser)
     }
+})
+
+app.get('/api/search-users/:query', (req, res) => {
+    const searchQuery = req.params.query;
+    const foundUsers = findUsers(searchQuery)
+    res.json(foundUsers)
 })
 
 app.post('/upload', upload.single("file"), (req: Request, res: Response) => {

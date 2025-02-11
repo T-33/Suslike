@@ -13,7 +13,7 @@ export default function AddPost() {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
-    const [userProfile, setUserProfile] = useState<User | null>(readUserCookie());
+    const [userProfile] = useState<User | null>(readUserCookie());
 
     if(userProfile == null) {
        return <Navigate to="/authorization" replace />

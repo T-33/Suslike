@@ -1,1 +1,62 @@
-[]
+[
+  {
+    "user_id": 138573,
+    "username": "timoxa",
+    "password": "$2b$10$TcRNfT7ZcClnNyKQbVMkg.Gcskz.jOBoCReBsQbaiPr0mXR5KEu9i",
+    "full_name": "Timur Rakhmatullaev",
+    "email": "timur@timur.com",
+    "date_of_birth": "2025-02-04",
+    "relationship_status": "single",
+    "zodiac_sing": "Aquarius",
+    "registration_date": "2025-02-11",
+    "followers": 0,
+    "following": 0,
+    "profile_picture_url": "http://localhost:3001/uploads/1739260148208-944195484.png",
+    "background_picture_url": "http://localhost:3001/uploads/banners/default_banner.jpg"
+  },
+  {
+    "user_id": 860665,
+    "username": "yrys",
+    "password": "$2b$10$ZCIIhDsjVlCZR2Sh7nZrZ.u8zzWyfisI2A0P0m8VyQUJJqTEKnUU6",
+    "full_name": "bober",
+    "email": "bober@bober.org",
+    "date_of_birth": "2006-04-14",
+    "relationship_status": "married",
+    "zodiac_sing": "Aries",
+    "registration_date": "2025-02-11",
+    "followers": 0,
+    "following": 0,
+    "profile_picture_url": "http://localhost:3001/uploads/1739265203024-405524640.png",
+    "background_picture_url": "http://localhost:3001/uploads/banners/default_banner.jpg"
+  },
+  {
+    "user_id": 453055,
+    "username": "timur",
+    "password": "$2b$10$gcLFjGnDT2lp9f8WkMw7tedeDNMv7uNEJJcFFP06RtTc3Um1A9Dua",
+    "full_name": "timur",
+    "email": "timur@timur.org",
+    "date_of_birth": "2025-01-28",
+    "relationship_status": "single",
+    "zodiac_sing": "Aquarius",
+    "registration_date": "2025-02-11",
+    "followers": 0,
+    "following": 0,
+    "profile_picture_url": "http://localhost:3001/uploads/1739265479531-929577627.png",
+    "background_picture_url": "http://localhost:3001/uploads/banners/default_banner.jpg"
+  },
+  {
+    "user_id": 117229,
+    "username": "emirchik",
+    "password": "$2b$10$9Jk1b3O18X7D0O1SL11kZOGuYFiEbQYYBzj.wwviG12PcLTLNKuge",
+    "full_name": "emirchik",
+    "email": "emir@rmit.com",
+    "date_of_birth": "2025-02-04",
+    "relationship_status": "married",
+    "zodiac_sing": "Aquarius",
+    "registration_date": "2025-02-11",
+    "followers": 0,
+    "following": 0,
+    "profile_picture_url": "http://localhost:3001/uploads/1739266759084-753119333.png",
+    "background_picture_url": "http://localhost:3001/uploads/banners/default_banner.jpg"
+  }
+]
