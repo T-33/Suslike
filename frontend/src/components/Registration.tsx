@@ -180,6 +180,7 @@ export default function Registration() {
             setSuccess("User successfully registered");
             console.log("Successfully registered" + data);
 
+            localStorage.setItem('user', JSON.stringify(data.user));
             const username: string = preparedData.username as string;
             navigate(`/user/${username}`);
 
