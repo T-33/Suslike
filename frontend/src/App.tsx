@@ -6,59 +6,30 @@ import NotFound from './components/NotFound.tsx'
 import Registration from './components/Registration.tsx'
 import ResetPassword from './components/ResetPassword.tsx'
 import AddPostForm from "./components/AddPost.tsx";
+import Favorites from './components/Favorites.tsx'
+import Layout from './components/Layout.tsx'
 
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import {
-    BrowserRouter as Router,
-    Routes,
-    Route,
-    Link,
-    useLocation
-} from "react-router-dom";
-
-function AppContent() {
-    const location = useLocation();
-    const showNavigation = location.pathname === '/';
-
-    return (
-        <>
-            {showNavigation && (
-                <nav>
-                    <ul>
-                        <li>
-                            <Link to="/user">User</Link>
-                        </li>
-                        <li>
-                            <Link to="/authorization">Authorize</Link>
-                        </li>
-                        <li>
-                            <Link to={"/register"} >Register </Link>
-                        </li>
-                        <li>
-                            <Link to={"/add-post"}>Add post</Link>
-                        </li>
-                    </ul>
-                </nav>
-            )}
-
-            <Routes>
-                <Route path="/authorization" element={<Authorization />} />
-                <Route path="/" element={<Home />} />
-                <Route path="/user/:username" element={<UserProfile />}/>
-                <Route path="*" element={<NotFound />} />
-                <Route path="/register" element={<Registration />} />
-                <Route path="/reset-password" element={<ResetPassword />} />
-                <Route path="/add-post" element={<AddPostForm/>} />
-            </Routes>
-        </>
-    )
-}
 
 function App() {
     return (
         <Router>
-            <AppContent />
+            <Routes>
+                <Route path="/" element={<Layout />}>
+                    <Route index element={<Home />} />
+                    <Route path="user/:username" element={<UserProfile />} />
+                    <Route path="search" element={<Home />} />
+                    <Route path="add-post" element={<AddPostForm />} />
+                    <Route path="authorization" element={<Authorization />} />
+                    <Route path="register" element={<Registration />} />
+                    <Route path="reset-password" element={<ResetPassword />} />
+                    <Route path="*" element={<NotFound />} />
+                    <Route path="favorites" element={<Favorites/>}/>
+                </Route>
+            </Routes>
         </Router>
-    );
+    )
 }
+
 export default App
