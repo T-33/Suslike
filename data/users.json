@@ -33,7 +33,7 @@
   {
     "password": "123456",
     "profile_picture_url": "http://localhost:3001/uploads/1739000402357-513058579.png",
-    "full_name": "vfg",
+    "full_name": "platina703",
     "username": "timoxa",
     "email": "timoxatimoxa@gmail.com",
     "date_of_birth": "2025-01-28",
@@ -41,7 +41,10 @@
     "zodiacSign": "Aquarius",
     "registrationDate": "2025-02-08",
     "background_picture_url": "http://localhost:3001/uploads/banners/default_banner.jpg",
-    "user_id": 5
+    "user_id": 5,
+    "followers": 100,
+    "following": 1000,
+    "description": "SENIOR BUTTON PAINTER. CERTIFIED"
   },
   {
     "password": "123456",
