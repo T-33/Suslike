@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import {Post} from "../types/Post.ts";
 import { ImagePlus } from 'lucide-react';
+import {User} from "../types/User.ts";
+import {Navigate} from "react-router-dom"
 
 
 export default function AddPost() {
@@ -10,6 +12,12 @@ export default function AddPost() {
 
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+    const [userProfile, setUserProfile] = useState<User | null>(readUserCookie());
+
+    if(userProfile == null) {
+       return <Navigate to="/authorization" replace />
+    }
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -67,7 +75,7 @@ export default function AddPost() {
 
             const preparedData: Partial<Post> = {
                 ...post,
-                user_id: 123465, // TODO написать логику для пользователя
+                user_id: userProfile.user_id,
                 creation_date: new Date().toISOString(),
                 likes: 0,
                 imageUrl: imageUrl as string,
@@ -147,4 +155,16 @@ export default function AddPost() {
         </form>
         </>
     )
+}
+
+function readUserCookie(): User | null {
+   const userCookie = localStorage.getItem("user");
+
+   if(userCookie == null) {
+       return null;
+   }
+
+   const userProfile = JSON.parse(userCookie) as User;
+
+   return userProfile;
 }
