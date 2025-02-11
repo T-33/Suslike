@@ -281,7 +281,7 @@ export default function Registration() {
                     >
                         <option className="bg-white text-black" value="" disabled>Select your status</option>
                         {relationship_statuses.map(status => (
-                            <option key={status.value} className="bg-gray-700 text-white" value={status.value}>{status.label}</option>
+                            <option key={status.value} className="bg-gray-700 text-white" value={status.value}>{status.value}</option>
                         ))}
                     </select>
                 </div>
