@@ -8,7 +8,7 @@ export default function UserProfile() {
     const {username} = useParams<{username : string}>();
     const [userProfile, setUserProfile] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
-    const [errorFetchingUser, setErrorFetchingUser] = useState(true)
+    const [errorFetchingUser, setErrorFetchingUser] = useState(false)
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -17,22 +17,28 @@ export default function UserProfile() {
                 //TODO extract into environment variable
                const url = `http://localhost:3001/api/users/${username}`
                const response = await fetch(url);
-               const data = await response.json();
-               setUserProfile(data);
 
-               setLoading(false)
+               if(response.ok) {
+                   const data = await response.json();
+                   setUserProfile(data);
+                   setLoading(false)
+               } else {
+                   setErrorFetchingUser(true);
+               }
            } catch(error) {
                console.log("Error fetching user:", error);
+               setErrorFetchingUser(true);
            }
         }
         fetchUser();
         }, [username])
 
-    if (userProfile == null) {
+    if (userProfile == null || errorFetchingUser) {
         return <NotFound/>
     }
+
     return (
-        <div className="w-1/2 mx-auto flex flex-col border border-solid border-gray-200">
+        <div className="w-1/2 h-full mx-auto flex flex-col border border-solid border-gray-200">
             <header className="flex">
                 <button
                     type="button"
@@ -44,33 +50,28 @@ export default function UserProfile() {
                 <h1 className="mx-4 font-bold text-4xl">{userProfile.username}</h1>
             </header>
             <main>
-                <section>
-                    <div className="max-h-1/4">
-                        <img
-                            className="w-full aspect-3/1 object-cover"
-                            src={userProfile.background_picture_url}
-                            alt="Background"
-                        />
-                    </div>
-                    <div
-                        className="flex justify-between m-2"
-                    >
-                        <img
-                            className="w-1/4 max-h-1/3 rounded-full aspect-square border-5 border-solid border-white"
-                            src={userProfile.profile_picture_url}
-                            alt="Background"
-                        />
+                <section className="relative">
+                    <img
+                        className="max-h-1/4 w-full aspect-3/1 object-cover"
+                        src={userProfile.background_picture_url}
+                        alt="Background"
+                    />
+                    <img
+                        className="absolute left-[15%] bottom-[calc(-10%)] height-auto -translate-x-1/2 w-1/4 rounded-full aspect-square border-5 border-solid border-gray-300"
+                        src={userProfile.profile_picture_url}
+                        alt="Background"
+                    />
+                    <div className="flex justify-end m-2">
                         <button
                             type="button"
-                            className="mr-4 cursor-pointer inline-block self-center p-4 border-3 border-cyan-500 text-cyan-500 rounded-full"
+                            className="inline-flex justify-center items-center mr-4 aspect-4/1 text-center cursor-pointer p-4 border-3 border-cyan-500 text-white rounded-full"
                             onClick={()=>console.log("follow")}
                         >
                             Follow
                         </button>
                     </div>
-
                 </section>
-                <section className="flex flex-col ml-2 text-left">
+                <section className="flex flex-col ml-2 mt-7 text-left">
                     <div className="flex flex-col self-start">
                         <div className="font-bold text-4xl">
                             {userProfile.full_name}
@@ -83,9 +84,13 @@ export default function UserProfile() {
                     <p className="mt-2">
                         {userProfile.description}
                     </p>
-
-                   {userProfile.date_of_birth}
-                   {userProfile.relationship_status}
+                    <span>
+                        {userProfile.date_of_birth}
+                    </span>
+                    {" "}
+                    <span>
+                        {userProfile.relationship_status}
+                    </span>
                     <p>
                         <span>
                             <span className="font-bold">
