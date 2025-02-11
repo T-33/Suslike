@@ -19,7 +19,7 @@ function App() {
                 <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />
                     <Route path="user/:username" element={<UserProfile />} />
-                    <Route path="search" element={<Home />} />
+                    <Route path="search"/>
                     <Route path="add-post" element={<AddPostForm />} />
                     <Route path="authorization" element={<Authorization />} />
                     <Route path="register" element={<Registration />} />

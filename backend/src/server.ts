@@ -252,6 +252,41 @@ app.post('/posts', (req: Request, res: Response) => {
     res.status(201).json({ message: 'Post created successfully', post: newPost });
 });
 
+app.get('/posts', (req: Request, res: Response) => {
+    const posts = readPosts();
+
+    if(!posts){
+        res.status(404).json({error: 'No posts found.'});
+        return;
+    }
+    res.json(posts);
+})
+
+
+function findUserById(userId: number): User | undefined {
+    const allUsers = readUsers();
+    return allUsers.find(user => user.user_id === userId);
+}
+
+app.get('/api/users/id/:userId', (req, res) => {
+    const userId = parseInt(req.params.userId);
+
+    if (isNaN(userId)) {
+        res.status(400).json({ error: 'Invalid user ID' });
+        return;
+    }
+
+    const foundUser = findUserById(userId);
+
+    if (!foundUser) {
+        res.status(404).json({ error: 'User not found' });
+        return;
+    }
+
+    const { password, ...userWithoutPassword } = foundUser;
+    res.json(userWithoutPassword);
+});
+
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
