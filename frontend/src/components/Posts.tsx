@@ -3,12 +3,17 @@ import {Post} from "../types/Post.ts"
 import {Link} from "react-router-dom";
 import {User} from "../types/User.ts";
 import Default_Avatar from '../../../data/user_avatars/default.png'
+import AddPost from "./AddPost.tsx";
 
 export default function Posts() {
     const [posts, setPosts] = useState<Post[]>([]);
     const [users, setUsers] = useState<{[key: number]: User}>({});
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+
+    const [isAddPostModalOpen, setIsAddPostModalOpen] = useState(false);
+    const openAddPostModal = () => setIsAddPostModalOpen(true);
+    const closeAddPostModal = () => setIsAddPostModalOpen(false);
 
     useEffect(() => {
         fetch("http://localhost:3001/posts")
@@ -48,13 +53,16 @@ export default function Posts() {
 
     return (
         <div className="container max-w-2xl mx-auto ">
-            <div className="flex justify-between items-center align-middle mb-4 gap-3 border border-gray-400 rounded-lg p-3">
+            <div className="flex justify-between items-center align-middle mb-4 gap-3 border border-gray-400 rounded-lg p-3"
+                 onClick={openAddPostModal} >
                 <input
                     placeholder="What's new?"
-                    className="w-xl p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                    className="w-xl p-2 rounded focus:outline-none"
+                    readOnly/>
                 <button type='submit' className="text-white w-30 p-2 border border-gray-500 rounded-2xl cursor-pointer hover:text-black">Post</button>
             </div>
 
+            <AddPost isOpen={isAddPostModalOpen} onClose={closeAddPostModal} />
 
             {posts.map((post, index) => {
                 const user = users[post.user_id];
