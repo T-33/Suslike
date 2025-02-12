@@ -10,6 +10,7 @@ import Favorites from './components/Favorites.tsx'
 import Layout from './components/Layout.tsx'
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
 import {useState} from "react"
+import SearchPage from './components/SearchPage.tsx'
 
 function App() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,7 +25,7 @@ function App() {
                     <Route path="/" element={<Layout openModal={openModal} />}>
                         <Route index element={<Home/>}/>
                         <Route path="user/:username" element={<UserProfile/>}/>
-                        <Route path="search"/>
+                        <Route path="search" element={<SearchPage />}/>
                         <Route path="authorization" element={<Authorization/>}/>
                         <Route path="register" element={<Registration/>}/>
                         <Route path="reset-password" element={<ResetPassword/>}/>

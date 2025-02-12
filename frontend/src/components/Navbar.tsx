@@ -3,7 +3,6 @@ import {House, Plus, Search, User, Heart} from "lucide-react";
 
 export default function Navbar({ openModal }: { openModal: () => void }) {
     return (
-        <>
             <nav  className="w-20 h-screen flex flex-col items-center justify-center  py-6">
                 <ul className="flex flex-col gap-5">
                     <li>
@@ -35,6 +34,5 @@ export default function Navbar({ openModal }: { openModal: () => void }) {
 
                 </ul>
             </nav>
-        </>
     )
 }
