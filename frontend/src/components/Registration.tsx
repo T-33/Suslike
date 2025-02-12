@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import {User} from '../types/User.ts';
 import {getZodiacSign} from "../../utils/zodiac.ts";
 import {relationship_statuses} from "../../utils/relationship_statuses.ts";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
 
 export default function Registration() {
     const [formData, setFormData] = useState<Partial<User>>({});
@@ -25,7 +25,7 @@ export default function Registration() {
 
     const navigate = useNavigate();
 
-    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) =>  {
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
             setSelectedFile(file);
@@ -122,7 +122,7 @@ export default function Registration() {
         if (/^\d{4}-\d{2}-\d{2}$/.test(formatted)) {
             const date = new Date(formatted);
             if (!isNaN(date.getTime())) {
-                setFormData(prev => ({ ...prev, date_of_birth: formatted }));
+                setFormData(prev => ({...prev, date_of_birth: formatted}));
                 setZodiacSign(getZodiacSign(formatted));
             }
         } else {
@@ -133,7 +133,7 @@ export default function Registration() {
     const handleDateChange = (date: Date | null) => {
         if (date) {
             const formattedDate = date.toISOString().split('T')[0];
-            setFormData(prev => ({ ...prev, date_of_birth: formattedDate }));
+            setFormData(prev => ({...prev, date_of_birth: formattedDate}));
             setZodiacSign(getZodiacSign(formattedDate));
             setDateOfBirth(formattedDate);
         }
@@ -194,114 +194,126 @@ export default function Registration() {
     };
 
     return (
-        <div>
-            <h1 className="text-4xl my-3">Registration</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <input
-                        type="file"
-                        accept="image/*"
-                        id="avatar-upload"
-                        className="hidden"
-                        onChange={handleFileChange}
-                        capture="user"
-                    />
-                    <label
-                        htmlFor="avatar-upload"
-                        className="w-24 h-24 rounded-full border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer hover:border-gray-400"
-                    >
-                        {previewUrl ? (
-                            <img src={previewUrl} alt="Avatar preview" className="w-24 h-24 rounded-full object-cover"/>
-                        ) : (
-                            <span className="text-3xl text-gray-400">+</span>
-                        )}
-                    </label>
-                </div>
+        <div className="flex flex-col justify-center items-center gap-5">
+            <div className="border border-gray-200 p-9 w-full max-w-sm">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+                    <span className="text-4xl self-center">Registration</span>
+                    <div className="p-5 self-center">
+                        <input
+                            type="file"
+                            accept="image/*"
+                            id="avatar-upload"
+                            className="hidden"
+                            onChange={handleFileChange}
+                            capture="user"
+                        />
+                        <label
+                            htmlFor="avatar-upload"
+                            className="w-24 h-24 rounded-full border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer hover:border-gray-400"
+                        >
+                            {previewUrl ? (
+                                <img src={previewUrl} alt="Avatar preview"
+                                     className="w-24 h-24 rounded-full object-cover"/>
+                            ) : (
+                                <span className="text-3xl text-gray-400">+</span>
+                            )}
+                        </label>
+                    </div>
 
-                <div>
-                    <label>Full Name: </label>
-                    <input
-                        type="text"
-                        name="full_name"
-                        value={formData.full_name || ''}
-                        onChange={handleInputChange}/>
-                </div>
+                    <div>
+                        <input
+                            type="text"
+                            name="full_name"
+                            placeholder="Full Name"
+                            value={formData.full_name || ''}
+                            onChange={handleInputChange}
+                            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                    </div>
 
-                <div>
-                    <label>Username: </label>
-                    <input
-                        required
-                        type="text"
-                        name="username"
-                        value={formData.username || ''}
-                        pattern="[a-zA-Z0-9_]+"
-                        onChange={handleInputChange}/>
-                    {usernameError && <p style={{color: 'red', fontSize: '12px'}}>{usernameError}</p>}
-                </div>
+                    <div>
+                        <input
+                            required
+                            type="text"
+                            name="username"
+                            placeholder="Username"
+                            value={formData.username || ''}
+                            pattern="[a-zA-Z0-9_]+"
+                            onChange={handleInputChange}
+                            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                        {usernameError && <p style={{color: 'red', fontSize: '12px'}}>{usernameError}</p>}
+                    </div>
 
-                <div>
-                    <label>E-mail</label>
-                    <input
-                        type="email"
-                        name="email"
-                        value={formData.email || ''}
-                        onChange={handleInputChange}/>
-                </div>
+                    <div>
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Email Address"
+                            value={formData.email || ''}
+                            onChange={handleInputChange}
+                            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                    </div>
 
-                <div>
-                    <label>Birthdate: </label>
-                    <DatePicker
-                        selected={dateOfBirth && /^\d{4}-\d{2}-\d{2}$/.test(dateOfBirth) ? new Date(dateOfBirth) : null}
-                        onChange={handleDateChange}
-                        customInput={<input value={dateOfBirth} onChange={handleRawDateInput} placeholder="YYYY-MM-DD" />}
-                        onChangeRaw={(e) => {
-                            if (!e || !(e.target instanceof HTMLInputElement)) return;
-                            handleRawDateInput(e as unknown as React.ChangeEvent<HTMLInputElement>);
-                        }}
-                        dateFormat="yyyy-MM-dd"
-                        placeholderText="YYYY-MM-DD"
-                        showYearDropdown
-                        showMonthDropdown
-                        dropdownMode="select"
-                        maxDate={new Date()}
-                    />
-                </div>
+                    <div>
+                        <input
+                            required
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            value={formData.password || ''}
+                            onChange={handleInputChange}
+                            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                        {passwordError && <p style={{color: 'red', fontSize: '12px'}}>{passwordError}</p>}
+                    </div>
 
-                <div>
-                    <label>Zodiac Sign: {zodiacSign}</label>
-                </div>
+                    <div>
+                        <label>Birthdate: </label>
+                        <DatePicker
+                            selected={dateOfBirth && /^\d{4}-\d{2}-\d{2}$/.test(dateOfBirth) ? new Date(dateOfBirth) : null}
+                            onChange={handleDateChange}
+                            customInput={<input value={dateOfBirth} onChange={handleRawDateInput}
+                                                placeholder="YYYY-MM-DD"/>}
+                            onChangeRaw={(e) => {
+                                if (!e || !(e.target instanceof HTMLInputElement)) return;
+                                handleRawDateInput(e as unknown as React.ChangeEvent<HTMLInputElement>);
+                            }}
+                            dateFormat="yyyy-MM-dd"
+                            placeholderText="YYYY-MM-DD"
+                            showYearDropdown
+                            showMonthDropdown
+                            dropdownMode="select"
+                            maxDate={new Date()}
+                        />
+                        <p className="text-sm text-gray-400 ">Zodiac Sign: {zodiacSign}</p>
+                    </div>
 
-                <div>
-                    <label>Marital Status: </label>
-                    <select
-                        value={relationshipStatus || ""}
-                        onChange={(e) => {
-                            setRelationshipStatus(e.target.value);
-                            setFormData(prev => ({ ...prev, relationship_status: e.target.value }));
-                        }}
-                    >
-                        <option className="bg-white text-black" value="" disabled>Select your status</option>
-                        {relationship_statuses.map(status => (
-                            <option key={status.value} className="bg-gray-700 text-white" value={status.value}>{status.value}</option>
-                        ))}
-                    </select>
-                </div>
+                    <div>
+                        <label>Marital Status: </label>
+                        <select
+                            value={relationshipStatus || ""}
+                            onChange={(e) => {
+                                setRelationshipStatus(e.target.value);
+                                setFormData(prev => ({...prev, relationship_status: e.target.value}));
+                            }}
+                        >
+                            <option className="bg-white text-gray-600 " value="" disabled>Select your status</option>
+                            {relationship_statuses.map(status => (
+                                <option key={status.value} className="bg-gray-500 text-white"
+                                        value={status.value}>{status.value}</option>
+                            ))}
+                        </select>
+                    </div>
 
-                <div>
-                    <label>Password: </label>
-                    <input
-                        required
-                        type="password"
-                        name="password"
-                        value={formData.password || ''}
-                        onChange={handleInputChange}/>
-                    {passwordError && <p style={{color: 'red', fontSize: '12px'}}>{passwordError}</p>}
-                </div>
 
-                <button type='submit'>Register</button>
-            </form>
-            {error && <p style={{color: 'red'}}>{error}</p>}
-            {success && <p style={{color: 'green'}}>{success}</p>}
+                    <button type='submit' className="mt-4 bg-amber-50 text-gray-700 p-2 border rounded-2xl cursor-pointer hover:text-black ">Register</button>
+                </form>
+                {error && <p style={{color: 'red'}}>{error}</p>}
+                {success && <p style={{color: 'green'}}>{success}</p>}
+            </div>
+
+            <div className="flex flex-col items-center p-3.5 border border-gray-200 w-full max-w-sm">
+                <p>Have an account?</p>
+                <Link to="/authorization" className="text-blue-400 hover:text-blue-500">Log in</Link>
+            </div>
         </div>
     )
 }
