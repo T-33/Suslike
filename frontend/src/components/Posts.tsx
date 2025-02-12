@@ -48,26 +48,54 @@ export default function Posts() {
 
     return (
         <div className="container max-w-2xl mx-auto ">
-            {posts.map((post) => {
-                const user = users[post.user_id];
-                return(
-                <div key={post.post_id} className="p-4 mb-4 border border-gray-400 rounded-lg">
-                    <Link to={`/user/${user?.username}`} className="inline-flex items-center justify-center text-white">
-                        <img
-                            src={user?.profile_picture_url || Default_Avatar}
-                            alt={`${user?.username}'s avatar`}
-                            className="w-10 h-10 rounded-full mr-3 object-cover cursor-pointer"
-                        />
-                        <span className="text-gray-400">@{user?.username}</span>
-                    </Link>
+            <div className="flex justify-between items-center align-middle mb-4 gap-3 border border-gray-400 rounded-lg p-3">
+                <input
+                    placeholder="What's new?"
+                    className="w-xl p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                <button type='submit' className="text-white w-30 p-2 border border-gray-500 rounded-2xl cursor-pointer hover:text-black">Post</button>
+            </div>
 
-                    {post.imageUrl && (
-                        <img src={post.imageUrl} alt="Post" className="w-full h-60 object-cover rounded-lg"/>
-                    )}
-                    <p className="mt-2">{post.text}</p>
-                    <p className="text-sm text-gray-500">Likes: {post.likes}</p>
-                </div>
-    )
+
+            {posts.map((post, index) => {
+                const user = users[post.user_id];
+                const isFirstPost = index === 0;
+                const isLastPost = index === posts.length - 1;
+                const isOnlyPost = posts.length === 1;
+
+                return (
+                    <div
+                        key={post.post_id}
+                        className={`p-4 border border-gray-400 ${
+                            isOnlyPost
+                                ? "rounded-lg"
+                                : `${isFirstPost ? "rounded-t-lg" : ""} ${
+                                    isLastPost ? "rounded-b-lg border-b" : "border-b-0"
+                                }`
+                        }`}
+                    >
+                        <Link
+                            to={`/user/${user?.username}`}
+                            className="inline-flex items-center justify-center text-white"
+                        >
+                            <img
+                                src={user?.profile_picture_url || Default_Avatar}
+                                alt={`${user?.username}'s avatar`}
+                                className="w-10 h-10 rounded-full mr-3 object-cover cursor-pointer"
+                            />
+                            <span className="text-gray-400">@{user?.username}</span>
+                        </Link>
+
+                        {post.imageUrl && (
+                            <img
+                                src={post.imageUrl}
+                                alt="Post"
+                                className="w-full h-60 object-cover rounded-lg"
+                            />
+                        )}
+                        <p className="mt-2">{post.text}</p>
+                        <p className="text-sm text-gray-500">Likes: {post.likes}</p>
+                    </div>
+                );
             })}
         </div>
     )
