@@ -5,31 +5,37 @@ import UserProfile from './components/UserProfile.tsx'
 import NotFound from './components/NotFound.tsx'
 import Registration from './components/Registration.tsx'
 import ResetPassword from './components/ResetPassword.tsx'
-import AddPostForm from "./components/AddPost.tsx";
+import AddPost from "./components/AddPost.tsx"
 import Favorites from './components/Favorites.tsx'
 import Layout from './components/Layout.tsx'
-
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
+import {useState} from "react"
 
 function App() {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+
     return (
         <Router>
-            <Routes>
-                <Route path="/" element={<Layout />}>
-                    <Route index element={<Home />} />
-                    <Route path="user/:username" element={<UserProfile />} />
-                    <Route path="search"/>
-                    <Route path="add-post" element={<AddPostForm />} />
-                    <Route path="authorization" element={<Authorization />} />
-                    <Route path="register" element={<Registration />} />
-                    <Route path="reset-password" element={<ResetPassword />} />
-                    <Route path="*" element={<NotFound />} />
-                    <Route path="favorites" element={<Favorites/>}/>
-                </Route>
-            </Routes>
+            <div>
+                <Routes>
+                    <Route path="/" element={<Layout openModal={openModal} />}>
+                        <Route index element={<Home/>}/>
+                        <Route path="user/:username" element={<UserProfile/>}/>
+                        <Route path="search"/>
+                        <Route path="authorization" element={<Authorization/>}/>
+                        <Route path="register" element={<Registration/>}/>
+                        <Route path="reset-password" element={<ResetPassword/>}/>
+                        <Route path="favorites" element={<Favorites/>}/>
+                        <Route path="*" element={<NotFound/>}/>
+                    </Route>
+                </Routes>
+
+                <AddPost isOpen={isModalOpen} onClose={closeModal} />
+            </div>
         </Router>
     )
 }
-
 export default App

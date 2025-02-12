@@ -1,7 +1,7 @@
 import {NavLink} from "react-router-dom";
 import {House, Plus, Search, User, Heart} from "lucide-react";
 
-export default function Navbar() {
+export default function Navbar({ openModal }: { openModal: () => void }) {
     return (
         <>
             <nav  className="w-20 h-screen flex flex-col items-center justify-center  py-6">
@@ -18,9 +18,9 @@ export default function Navbar() {
                     </li>
 
                     <li>
-                        <NavLink to={"/add-post"}>
+                        <button onClick={openModal} >
                             <Plus className="nav-icon active:bg-gray-700"/>
-                        </NavLink>
+                        </button>
                     </li>
                     <li>
                         <NavLink to="/favorites">
