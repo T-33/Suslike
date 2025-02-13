@@ -658,5 +658,65 @@
     "following": 393,
     "profile_picture_url": "http://localhost:3001/uploads/1739260148208-944195484.png",
     "background_picture_url": "http://localhost:3001/uploads/banners/default_banner.jpg"
+  },
+  {
+    "user_id": 569475,
+    "username": "timurka",
+    "password": "$2b$10$mY/Qvuc7zEkcrPSS/VNklOFx.Od2jcS0olkvVH81erVI5K//v9pG6",
+    "full_name": "Timur Rakhmatullaev",
+    "email": "tima@tima.com",
+    "date_of_birth": "2025-01-27",
+    "relationship_status": "Single",
+    "zodiac_sing": "Aquarius",
+    "registration_date": "2025-02-12",
+    "followers": 0,
+    "following": 0,
+    "profile_picture_url": "http://localhost:3001/uploads/1739387066093-729175480.png",
+    "background_picture_url": "http://localhost:3001/uploads/banners/default_banner.jpg"
+  },
+  {
+    "user_id": 394423,
+    "username": "baklanchik",
+    "password": "$2b$10$Yz7WVvDYD.mPP0KijavHLucQAVyCtvWhFMXZ3yRlp0jvuQ97K4KPe",
+    "full_name": "kjfsjf",
+    "zodiac_sing": "",
+    "registration_date": "2025-02-12",
+    "followers": 0,
+    "following": 0,
+    "profile_picture_url": null,
+    "background_picture_url": "http://localhost:3001/uploads/banners/default_banner.jpg"
+  },
+  {
+    "user_id": 394259,
+    "username": "amirchik",
+    "password": "$2b$10$dDMGuhAx0xu66zidGa5IXOD6zYkeeM/O/bmzvFSUV/TxDk8ddKjLy",
+    "zodiac_sing": "",
+    "registration_date": "2025-02-12",
+    "followers": 0,
+    "following": 0,
+    "profile_picture_url": null,
+    "background_picture_url": "http://localhost:3001/uploads/banners/default_banner.jpg"
+  },
+  {
+    "user_id": 169944,
+    "username": "danik",
+    "password": "$2b$10$8I0dOs0Qa0QhR9XDDypuXeOaMINxOo3d7MApnGlVfXuNzaSA.QfHO",
+    "zodiac_sing": "",
+    "registration_date": "2025-02-12",
+    "followers": 0,
+    "following": 0,
+    "profile_picture_url": null,
+    "background_picture_url": "http://localhost:3001/uploads/banners/default_banner.jpg"
+  },
+  {
+    "user_id": 970467,
+    "username": "azim",
+    "password": "$2b$10$6Hv7W3TfcuO6Jl/FgvixiuUvq5w7GLZ0KNRwu95NNf04dVXdYm1yS",
+    "zodiac_sing": "",
+    "registration_date": "2025-02-13",
+    "followers": 0,
+    "following": 0,
+    "profile_picture_url": null,
+    "background_picture_url": "http://localhost:3001/uploads/banners/default_banner.jpg"
   }
 ]

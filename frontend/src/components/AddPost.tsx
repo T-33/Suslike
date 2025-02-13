@@ -5,6 +5,8 @@ import {AnimatePresence, motion} from "framer-motion";
 import {Post} from "../types/Post.ts";
 import {User} from "../types/User.ts";
 
+import readUserCookie from "./utils/readUserCookie.tsx"
+
 import {ImagePlus} from 'lucide-react';
 
 export default function AddPost({isOpen, onClose}: { isOpen: boolean; onClose: () => void }) {
@@ -194,11 +196,4 @@ export default function AddPost({isOpen, onClose}: { isOpen: boolean; onClose: (
     );
 }
 
-function readUserCookie(): User | null {
-    const userCookie = localStorage.getItem("user");
 
-    if (userCookie == null) {
-        return null;
-    }
-    return JSON.parse(userCookie) as User;
-}
