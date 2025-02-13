@@ -304,7 +304,7 @@ export default function Registration() {
                     </div>
 
 
-                    <button type='submit' className="mt-4 bg-amber-50 text-gray-700 p-2 border rounded-2xl cursor-pointer hover:text-black ">Register</button>
+                    <button type='submit' className="mt-4 bg-amber-50 text-gray-700 p-2 border rounded-2xl cursor-pointer hover:text-black">Register</button>
                 </form>
                 {error && <p style={{color: 'red'}}>{error}</p>}
                 {success && <p style={{color: 'green'}}>{success}</p>}

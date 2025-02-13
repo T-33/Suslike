@@ -21,13 +21,14 @@ function App() {
         <Router>
             <div>
                 <Routes>
+                    <Route path="authorization" element={<Authorization/>}/>
+                    <Route path="register" element={<Registration/>}/>
+                    <Route path="reset-password" element={<ResetPassword/>}/>
+
                     <Route path="/" element={<Layout openModal={openModal} />}>
                         <Route index element={<Home/>}/>
                         <Route path="user/:username" element={<UserProfile/>}/>
                         <Route path="search"/>
-                        <Route path="authorization" element={<Authorization/>}/>
-                        <Route path="register" element={<Registration/>}/>
-                        <Route path="reset-password" element={<ResetPassword/>}/>
                         <Route path="favorites" element={<Favorites/>}/>
                         <Route path="*" element={<NotFound/>}/>
                     </Route>
