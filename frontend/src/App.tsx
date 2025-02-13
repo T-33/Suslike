@@ -8,6 +8,8 @@ import ResetPassword from './components/ResetPassword.tsx'
 import AddPost from "./components/AddPost.tsx"
 import Favorites from './components/Favorites.tsx'
 import Layout from './components/Layout.tsx'
+import SearchPage from './components/SearchPage.tsx'
+
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
 import {useState} from "react"
 
@@ -28,7 +30,7 @@ function App() {
                     <Route path="/" element={<Layout openModal={openModal} />}>
                         <Route index element={<Home/>}/>
                         <Route path="user/:username" element={<UserProfile/>}/>
-                        <Route path="search"/>
+                        <Route path="search" element={<SearchPage />}/>
                         <Route path="favorites" element={<Favorites/>}/>
                         <Route path="*" element={<NotFound/>}/>
                     </Route>
