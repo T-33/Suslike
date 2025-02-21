@@ -2,6 +2,7 @@ import {Link, useParams} from "react-router-dom";
 import NotFound from "./NotFound.tsx";
 import {User} from "../types/User.ts";
 import {useState, useEffect} from "react";
+import API_ROOT from "../../api-root.tsx";
 
 export default function UserProfile() {
     const {username} = useParams<{username : string}>();
@@ -12,8 +13,7 @@ export default function UserProfile() {
         const fetchUser = async () => {
            if(!username) return;
            try {
-                //TODO extract into environment variable
-               const url = `http://localhost:3001/api/users/${username}`
+               const url = `${API_ROOT}/api/users/${username}`
                const response = await fetch(url);
 
                if(response.ok) {

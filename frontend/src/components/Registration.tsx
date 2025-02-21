@@ -14,6 +14,7 @@ import smilingGopher from '../images/default_avatars/gopher-smiling-blushing.png
 import thinkingGopher from '../images/default_avatars/gopher-thinking.png';
 import gopherWink from '../images/default_avatars/gopher-wink.png';
 import defaultBanner from '../images/default_banners/default_banner.gif'
+import API_ROOT from "../../api-root.tsx";
 
 export default function Registration() {
     const [formData, setFormData] = useState<Partial<User>>({});
@@ -51,7 +52,7 @@ export default function Registration() {
         formData.append('file', file);
 
         try {
-            const response = await fetch("http://localhost:3001/upload", {
+            const response = await fetch(`${API_ROOT}/upload`, {
                 method: "POST",
                 body: formData,
             });
@@ -179,7 +180,7 @@ export default function Registration() {
                 background_picture_url: defaultBanner,
             };
 
-            const response = await fetch('http://localhost:3001/register', {
+            const response = await fetch(`${API_ROOT}/register`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(preparedData),

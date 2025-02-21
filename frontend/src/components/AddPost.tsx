@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Navigate} from "react-router-dom";
+import {Navigate, useLocation} from "react-router-dom";
 import {AnimatePresence, motion} from "framer-motion";
 
 import API_ROOT from "../../api-root.tsx"
@@ -20,8 +20,9 @@ export default function AddPost({isOpen, onClose}: { isOpen: boolean; onClose: (
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
     const [userProfile] = useState<User | null>(readUserCookie());
+    const location = useLocation();
 
-    if (userProfile == null) {
+    if (userProfile == null && location.pathname != "/register" && !location.pathname.includes("/user")) {
         return <Navigate to="/authorization" replace/>
     }
 
@@ -81,7 +82,7 @@ export default function AddPost({isOpen, onClose}: { isOpen: boolean; onClose: (
 
             const preparedData: Partial<Post> = {
                 ...post,
-                user_id: userProfile.user_id,
+                user_id: userProfile?.user_id,
                 creation_date: new Date().toISOString(),
                 likes: 0,
                 imageUrl: imageUrl as string,
