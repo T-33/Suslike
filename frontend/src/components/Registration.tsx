@@ -7,14 +7,14 @@ import {getZodiacSign} from "../../utils/zodiac.ts";
 import {relationship_statuses} from "../../utils/relationship_statuses.ts";
 import {useNavigate, Link} from "react-router-dom";
 
-import API_ROOT from "../../api-root.tsx"
-
-import angryGopher from '../../../data/user_avatars/default_avatars/gopher-angry.png';
-import gopherAtPeace from '../../../data/user_avatars/default_avatars/gopher-at-peace.png';
-import sleepingGopher from '../../../data/user_avatars/default_avatars/gopher-sleeping.png';
-import smilingGopher from '../../../data/user_avatars/default_avatars/gopher-smiling-blushing.png';
-import thinkingGopher from '../../../data/user_avatars/default_avatars/gopher-thinking.png';
-import gopherWink from '../../../data/user_avatars/default_avatars/gopher-wink.png';
+import angryGopher from '../images/default_avatars/gopher-angry.png';
+import gopherAtPeace from '../images/default_avatars/gopher-at-peace.png';
+import sleepingGopher from '../images/default_avatars/gopher-sleeping.png';
+import smilingGopher from '../images/default_avatars/gopher-smiling-blushing.png';
+import thinkingGopher from '../images/default_avatars/gopher-thinking.png';
+import gopherWink from '../images/default_avatars/gopher-wink.png';
+import defaultBanner from '../images/default_banners/default_banner.gif'
+import API_ROOT from "../../api-root.tsx";
 
 export default function Registration() {
     const [formData, setFormData] = useState<Partial<User>>({});

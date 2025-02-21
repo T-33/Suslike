@@ -2,7 +2,7 @@ import {Link, useParams} from "react-router-dom";
 import NotFound from "./NotFound.tsx";
 import {User} from "../types/User.ts";
 import {useState, useEffect} from "react";
-import API_ROOT from "../../api-root.tsx"
+import API_ROOT from "../../api-root.tsx";
 
 export default function UserProfile() {
     const {username} = useParams<{username : string}>();
