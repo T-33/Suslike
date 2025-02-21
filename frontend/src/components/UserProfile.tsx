@@ -1,13 +1,11 @@
 import {Link, useParams} from "react-router-dom";
 import NotFound from "./NotFound.tsx";
-import Loading from "./Loading.tsx"
-import {User} from "../types/User.ts"
+import {User} from "../types/User.ts";
 import {useState, useEffect} from "react";
 
 export default function UserProfile() {
     const {username} = useParams<{username : string}>();
     const [userProfile, setUserProfile] = useState<User | null>(null);
-    const [loading, setLoading] = useState(true);
     const [errorFetchingUser, setErrorFetchingUser] = useState(false)
 
     useEffect(() => {
@@ -21,7 +19,6 @@ export default function UserProfile() {
                if(response.ok) {
                    const data = await response.json();
                    setUserProfile(data);
-                   setLoading(false)
                } else {
                    setErrorFetchingUser(true);
                }
@@ -38,7 +35,7 @@ export default function UserProfile() {
     }
 
     return (
-        <div className="w-1/2 h-full mx-auto flex flex-col border border-solid border-gray-200">
+        <div className="w-1/2 h-full mx-auto flex flex-col py-8 border border-solid rounded-3xl border-gray-200">
             <header className="flex">
                 <button
                     type="button"
@@ -60,6 +57,7 @@ export default function UserProfile() {
                         className="absolute left-[15%] bottom-[calc(-10%)] height-auto -translate-x-1/2 w-1/4 rounded-full aspect-square border-5 border-solid border-gray-300"
                         src={userProfile.profile_picture_url}
                         alt="Background"
+                        style={{imageRendering: "pixelated"}}
                     />
                     <div className="flex justify-end m-2">
                         <button

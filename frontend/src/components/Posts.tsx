@@ -2,7 +2,6 @@ import {useEffect, useState} from "react";
 import {Post} from "../types/Post.ts"
 import {Link} from "react-router-dom";
 import {User} from "../types/User.ts";
-import Default_Avatar from '../../../data/user_avatars/default.png'
 import AddPost from "./AddPost.tsx";
 
 export default function Posts() {
@@ -86,7 +85,7 @@ export default function Posts() {
                             className="inline-flex items-center justify-center text-white"
                         >
                             <img
-                                src={user?.profile_picture_url || Default_Avatar}
+                                src={user?.profile_picture_url}
                                 alt={`${user?.username}'s avatar`}
                                 className="w-10 h-10 rounded-full mr-3 object-cover cursor-pointer"
                             />

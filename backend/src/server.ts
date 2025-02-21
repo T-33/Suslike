@@ -82,11 +82,6 @@ function findUser(username: string): User | undefined {
     return allUsers.find(user => user.username == username);
 }
 
-/**
- * Finds users by piece of username.
- * @param username
- * @return List of users whose usernames contain specified string.
- */
 function findUsers(query: string): User[] {
     const allUsers = readUsers();
 
