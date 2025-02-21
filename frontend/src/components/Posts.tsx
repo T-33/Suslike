@@ -2,8 +2,9 @@ import {useEffect, useState} from "react";
 import {Post} from "../types/Post.ts"
 import {Link} from "react-router-dom";
 import {User} from "../types/User.ts";
-import Default_Avatar from '../../../data/user_avatars/default.png'
 import AddPost from "./AddPost.tsx";
+import API_ROOT from "../../api-root.tsx"
+
 
 export default function Posts() {
     const [posts, setPosts] = useState<Post[]>([]);
@@ -16,7 +17,7 @@ export default function Posts() {
     const closeAddPostModal = () => setIsAddPostModalOpen(false);
 
     useEffect(() => {
-        fetch("http://localhost:3001/posts")
+        fetch(`${API_ROOT}/posts`)
             .then(res => res.json())
             .then(data => {
                 setPosts(data);
@@ -26,7 +27,7 @@ export default function Posts() {
 
                 return Promise.all(
                     userIds.map(userId =>
-                        fetch(`http://localhost:3001/api/users/id/${userId}`)
+                        fetch(`${API_ROOT}/api/users/id/${userId}`)
                             .then(res => res.json())
                     )
                 );
@@ -86,7 +87,7 @@ export default function Posts() {
                             className="inline-flex items-center justify-center text-white"
                         >
                             <img
-                                src={user?.profile_picture_url || Default_Avatar}
+                                src={user?.profile_picture_url}
                                 alt={`${user?.username}'s avatar`}
                                 className="w-10 h-10 rounded-full mr-3 object-cover cursor-pointer"
                             />

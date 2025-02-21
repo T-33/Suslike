@@ -7,6 +7,13 @@ import {getZodiacSign} from "../../utils/zodiac.ts";
 import {relationship_statuses} from "../../utils/relationship_statuses.ts";
 import {useNavigate, Link} from "react-router-dom";
 
+import angryGopher from '../../../data/user_avatars/default_avatars/gopher-angry.png';
+import gopherAtPeace from '../../../data/user_avatars/default_avatars/gopher-at-peace.png';
+import sleepingGopher from '../../../data/user_avatars/default_avatars/gopher-sleeping.png';
+import smilingGopher from '../../../data/user_avatars/default_avatars/gopher-smiling-blushing.png';
+import thinkingGopher from '../../../data/user_avatars/default_avatars/gopher-thinking.png';
+import gopherWink from '../../../data/user_avatars/default_avatars/gopher-wink.png';
+
 export default function Registration() {
     const [formData, setFormData] = useState<Partial<User>>({});
     const [error, setError] = useState<string | null>(null);
@@ -20,8 +27,13 @@ export default function Registration() {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
-    const DEFAULT_BANNER_URL = 'http://localhost:3001/uploads/banners/default_banner.jpg';
+    const DEFAULT_BANNER_URL = 'http://localhost:3001/uploads/banners/default_banner.gif';
+    const defaultAvatars = [angryGopher, gopherAtPeace, sleepingGopher, smilingGopher, thinkingGopher, gopherWink];
 
+    const [defaultAvatar] = useState(() => {
+        const randomIndex = Math.floor(Math.random() * defaultAvatars.length);
+        return defaultAvatars[randomIndex];
+    });
 
     const navigate = useNavigate();
 
@@ -163,7 +175,7 @@ export default function Registration() {
                 registration_date: new Date().toISOString().split('T')[0],
                 followers: 0,
                 following: 0,
-                profile_picture_url: profilePictureUrl,
+                profile_picture_url: profilePictureUrl || defaultAvatar,
                 background_picture_url: DEFAULT_BANNER_URL,
             };
 

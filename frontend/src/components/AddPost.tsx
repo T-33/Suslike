@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import {Navigate} from "react-router-dom";
 import {AnimatePresence, motion} from "framer-motion";
 
+import API_ROOT from "../../api-root.tsx"
+
 import {Post} from "../types/Post.ts";
 import {User} from "../types/User.ts";
 
@@ -37,7 +39,7 @@ export default function AddPost({isOpen, onClose}: { isOpen: boolean; onClose: (
         formData.append('file', file);
 
         try {
-            const response = await fetch("http://localhost:3001/posts-upload", {
+            const response = await fetch(`${API_ROOT}/posts-upload`, {
                 method: "POST",
                 body: formData,
             });
@@ -85,7 +87,7 @@ export default function AddPost({isOpen, onClose}: { isOpen: boolean; onClose: (
                 imageUrl: imageUrl as string,
             };
 
-            const response = await fetch("http://localhost:3001/posts", {
+            const response = await fetch(`${API_ROOT}/posts`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -128,7 +130,7 @@ export default function AddPost({isOpen, onClose}: { isOpen: boolean; onClose: (
                         onClick={onClose}
                     >
                         <motion.div
-                            className=" p-6 rounded-2xl shadow-lg w-96 relative"
+                            className="bg-gray p-6 rounded-2xl shadow-lg w-96 relative"
                             initial={{scale: 0.8, opacity: 0}}
                             animate={{scale: 1, opacity: 1}}
                             exit={{scale: 0.8, opacity: 0}}
