@@ -3,10 +3,7 @@
 
 - Aisha Orozbekova
 - Timur Rakhmatullaev
+-
+WEBPAGE(https://instagram-frontend-1oad.onrender.com/)
 
-## Expanding the ESLint configuration
-
-
-```js
-
-```
+Возникли проблемы с деплоем реакта на github pages, поэтому задеплоили на реальный хостинг.
