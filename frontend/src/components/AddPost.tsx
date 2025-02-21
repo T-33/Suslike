@@ -128,7 +128,7 @@ export default function AddPost({isOpen, onClose}: { isOpen: boolean; onClose: (
                         onClick={onClose}
                     >
                         <motion.div
-                            className=" p-6 rounded-2xl shadow-lg w-96 relative"
+                            className="bg-gray p-6 rounded-2xl shadow-lg w-96 relative"
                             initial={{scale: 0.8, opacity: 0}}
                             animate={{scale: 1, opacity: 1}}
                             exit={{scale: 0.8, opacity: 0}}
@@ -147,6 +147,15 @@ export default function AddPost({isOpen, onClose}: { isOpen: boolean; onClose: (
                                     name="text"
                                     placeholder="Write something..."
                                     onChange={handleInputChange}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter' && !e.shiftKey) {
+                                            e.preventDefault();
+                                            const form = e.currentTarget.closest('form');
+                                            if (form) {
+                                                form.requestSubmit();
+                                            }
+                                        }
+                                    }}
                                     value={post.text || ""}
                                     className="w-full p-2 mt-5 mb-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
