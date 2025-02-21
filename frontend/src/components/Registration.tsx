@@ -29,7 +29,6 @@ export default function Registration() {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
-    const DEFAULT_BANNER_URL = `${API_ROOT}/uploads/banners/default_banner.gif`;
     const defaultAvatars = [angryGopher, gopherAtPeace, sleepingGopher, smilingGopher, thinkingGopher, gopherWink];
 
     const [defaultAvatar] = useState(() => {
