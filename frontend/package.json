@@ -9,7 +9,7 @@
     "lint": "eslint instagram",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dis  t"
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.3",

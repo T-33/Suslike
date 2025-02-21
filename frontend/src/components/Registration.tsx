@@ -7,6 +7,8 @@ import {getZodiacSign} from "../../utils/zodiac.ts";
 import {relationship_statuses} from "../../utils/relationship_statuses.ts";
 import {useNavigate, Link} from "react-router-dom";
 
+import API_ROOT from "../../api-root.tsx"
+
 import angryGopher from '../../../data/user_avatars/default_avatars/gopher-angry.png';
 import gopherAtPeace from '../../../data/user_avatars/default_avatars/gopher-at-peace.png';
 import sleepingGopher from '../../../data/user_avatars/default_avatars/gopher-sleeping.png';
@@ -27,7 +29,7 @@ export default function Registration() {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
-    const DEFAULT_BANNER_URL = 'http://localhost:3001/uploads/banners/default_banner.gif';
+    const DEFAULT_BANNER_URL = `${API_ROOT}/uploads/banners/default_banner.gif`;
     const defaultAvatars = [angryGopher, gopherAtPeace, sleepingGopher, smilingGopher, thinkingGopher, gopherWink];
 
     const [defaultAvatar] = useState(() => {
@@ -51,7 +53,7 @@ export default function Registration() {
         formData.append('file', file);
 
         try {
-            const response = await fetch("http://localhost:3001/upload", {
+            const response = await fetch(`${API_ROOT}/upload`, {
                 method: "POST",
                 body: formData,
             });
