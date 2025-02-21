@@ -229,7 +229,7 @@ app.post('/posts-upload', uploadPostMedia.single('file'), (req: Request, res: Re
         res.status(400).json({ error: 'No file uploaded' });
         return;
     }
-    const fileUrl = `http://localhost:${port}/uploads/posts/${req.file.filename}`;
+    const fileUrl = `${API_ROOT}/uploads/posts/${req.file.filename}`;
     res.json({ url: fileUrl });
 });
 

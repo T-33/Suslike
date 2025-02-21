@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
+import API_ROOT from "../../api-root.tsx";
 
 export default function ResetPassword() {
     const [username, setUsername] = useState("");
@@ -21,7 +22,7 @@ export default function ResetPassword() {
             return;
         }
 
-        const response = await fetch("http://localhost:3001/reset-password", {
+        const response = await fetch(`${API_ROOT}/reset-password`, {
             method: "POST",
             headers: {"Content-Type": "application/json",},
             body: JSON.stringify({username, newPassword})
