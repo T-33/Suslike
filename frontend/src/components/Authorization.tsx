@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Link} from 'react-router-dom';
+import API_ROOT from "../../api-root.tsx"
 
 export default function Authorization() {
 
@@ -13,7 +14,7 @@ export default function Authorization() {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:3001/login', {
+            const response = await fetch(`${API_ROOT}/login`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({username, password})

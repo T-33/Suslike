@@ -3,6 +3,8 @@ import {Post} from "../types/Post.ts"
 import {Link} from "react-router-dom";
 import {User} from "../types/User.ts";
 import AddPost from "./AddPost.tsx";
+import API_ROOT from "../../api-root.tsx"
+
 
 export default function Posts() {
     const [posts, setPosts] = useState<Post[]>([]);
@@ -15,7 +17,7 @@ export default function Posts() {
     const closeAddPostModal = () => setIsAddPostModalOpen(false);
 
     useEffect(() => {
-        fetch("http://localhost:3001/posts")
+        fetch(`${API_ROOT}/posts`)
             .then(res => res.json())
             .then(data => {
                 setPosts(data);
@@ -25,7 +27,7 @@ export default function Posts() {
 
                 return Promise.all(
                     userIds.map(userId =>
-                        fetch(`http://localhost:3001/api/users/id/${userId}`)
+                        fetch(`${API_ROOT}/api/users/id/${userId}`)
                             .then(res => res.json())
                     )
                 );
