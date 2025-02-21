@@ -5,6 +5,8 @@ import cors from 'cors';
 import bodyParser from "body-parser";
 import bcrypt from 'bcrypt';
 
+const API_ROOT = "https://instagram-awho.onrender.com"
+
 import multer from "multer";
 
 import {User} from '../types/User';
@@ -113,8 +115,7 @@ app.post('/upload', upload.single("file"), (req: Request, res: Response) => {
         res.status(400).json({error: 'No file uploaded'});
         return;
     }
-
-    const fileUrl =  `http://localhost:${port}/uploads/${req.file.filename}`;
+    const fileUrl =  `${API_ROOT}/uploads/${req.file.filename}`;
     res.json({url: fileUrl});
 });
 
@@ -231,7 +232,6 @@ app.post('/posts-upload', uploadPostMedia.single('file'), (req: Request, res: Re
     const fileUrl = `http://localhost:${port}/uploads/posts/${req.file.filename}`;
     res.json({ url: fileUrl });
 });
-
 
 app.post('/posts', (req: Request, res: Response) => {
     const {post_id, ...otherFields } = req.body;

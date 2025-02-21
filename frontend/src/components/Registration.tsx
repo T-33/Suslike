@@ -181,7 +181,7 @@ export default function Registration() {
                 background_picture_url: DEFAULT_BANNER_URL,
             };
 
-            const response = await fetch('http://localhost:3001/register', {
+            const response = await fetch(`${API_ROOT}/register`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(preparedData),
