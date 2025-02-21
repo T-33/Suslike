@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import {Navigate} from "react-router-dom";
 import {AnimatePresence, motion} from "framer-motion";
 
+import API_ROOT from "../../api-root.tsx"
+
 import {Post} from "../types/Post.ts";
 import {User} from "../types/User.ts";
 
@@ -37,7 +39,7 @@ export default function AddPost({isOpen, onClose}: { isOpen: boolean; onClose: (
         formData.append('file', file);
 
         try {
-            const response = await fetch("http://localhost:3001/posts-upload", {
+            const response = await fetch(`${API_ROOT}/posts-upload`, {
                 method: "POST",
                 body: formData,
             });
@@ -85,7 +87,7 @@ export default function AddPost({isOpen, onClose}: { isOpen: boolean; onClose: (
                 imageUrl: imageUrl as string,
             };
 
-            const response = await fetch("http://localhost:3001/posts", {
+            const response = await fetch(`${API_ROOT}/posts`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -147,15 +149,6 @@ export default function AddPost({isOpen, onClose}: { isOpen: boolean; onClose: (
                                     name="text"
                                     placeholder="Write something..."
                                     onChange={handleInputChange}
-                                    onKeyDown={(e) => {
-                                        if (e.key === 'Enter' && !e.shiftKey) {
-                                            e.preventDefault();
-                                            const form = e.currentTarget.closest('form');
-                                            if (form) {
-                                                form.requestSubmit();
-                                            }
-                                        }
-                                    }}
                                     value={post.text || ""}
                                     className="w-full p-2 mt-5 mb-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />

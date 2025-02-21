@@ -1,1 +1,27 @@
-[]
+[
+  {
+    "user_id": 341242,
+    "username": "aishkoy",
+    "password": "$2b$10$.szpEKl9W3Aca2P421vJvu/kT/3vbHnPrnMc3q4VjvEmIdwWHJ8Gi",
+    "full_name": "Aisha",
+    "zodiac_sing": "",
+    "registration_date": "2025-02-21",
+    "followers": 0,
+    "following": 0,
+    "profile_picture_url": "/@fs/C:/Users/aishk/WebstormProjects/instagram/data/user_avatars/default_avatars/gopher-angry.png",
+    "background_picture_url": "http://localhost:3001/uploads/banners/default_banner.gif"
+  },
+  {
+    "user_id": 457422,
+    "username": "aishkaaa",
+    "password": "$2b$10$4oQVCYbhiUp.QLk4Chb70.APqBc/hr3oYIMXWbcI.199M1I8d1Vgi",
+    "full_name": "Aisha Orozbekova",
+    "date_of_birth": "2007-03-08",
+    "zodiac_sing": "Pisces",
+    "registration_date": "2025-02-21",
+    "followers": 0,
+    "following": 0,
+    "profile_picture_url": "/@fs/C:/Users/aishk/WebstormProjects/instagram/data/user_avatars/default_avatars/gopher-sleeping.png",
+    "background_picture_url": "http://localhost:3001/uploads/banners/default_banner.gif"
+  }
+]
