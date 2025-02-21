@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors());
 
-const port = 3001;
+const port = process.env.PORT || 3001;
 
 const FILE_PATH = path.join(__dirname, '../../data/users.json');
 const POSTS_FILE_PATH = path.join(__dirname, '../../data/posts.json');

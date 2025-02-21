@@ -3,6 +3,8 @@ import Loading from "./Loading.tsx"
 import React, {useEffect, useState} from "react";
 import {User} from "../types/User.ts";
 import {NavLink} from "react-router-dom";
+import API_ROOT from "../../api-root.tsx"
+
 
 export default function SearchPage () {
 
@@ -22,7 +24,7 @@ export default function SearchPage () {
         try {
             setLoading(true)
             setFoundUsers(null)
-            const response = await fetch(`http://localhost:3001/api/search-users/${username}`)
+            const response = await fetch(`${API_ROOT}/api/search-users/${username}`)
             if(response.ok) {
                 const foundUsers = await response.json() as User[];
                 setFoundUsers(foundUsers)

@@ -718,5 +718,32 @@
     "following": 0,
     "profile_picture_url": null,
     "background_picture_url": "http://localhost:3001/uploads/banners/default_banner.jpg"
+  },
+  {
+    "user_id": 655708,
+    "username": "vprime",
+    "password": "$2b$10$hIlyxuthLJKJHwKC6fKkDu9Mm7TgGFwyZm3wUZlmrN6peo1aX/bKO",
+    "full_name": "predator",
+    "date_of_birth": "2006-04-14",
+    "relationship_status": "Married",
+    "zodiac_sing": "Aries",
+    "registration_date": "2025-02-18",
+    "followers": 0,
+    "following": 0,
+    "profile_picture_url": "http://localhost:3001/uploads/1739864116995-262758271.png",
+    "background_picture_url": "http://localhost:3001/uploads/banners/default_banner.jpg"
+  },
+  {
+    "user_id": 618932,
+    "username": "qwerty",
+    "password": "$2b$10$9qVxlp9a/TeP/EAG8Ikhou1cOfj9FK49A7HiG0wLhuaP9cXDSE4TO",
+    "full_name": "AMIR",
+    "email": "amir@amir.com",
+    "zodiac_sing": "",
+    "registration_date": "2025-02-21",
+    "followers": 0,
+    "following": 0,
+    "profile_picture_url": null,
+    "background_picture_url": "http://localhost:3001/uploads/banners/default_banner.jpg"
   }
 ]
