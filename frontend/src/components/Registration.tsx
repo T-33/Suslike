@@ -7,12 +7,13 @@ import {getZodiacSign} from "../../utils/zodiac.ts";
 import {relationship_statuses} from "../../utils/relationship_statuses.ts";
 import {useNavigate, Link} from "react-router-dom";
 
-import angryGopher from '../../../data/user_avatars/default_avatars/gopher-angry.png';
-import gopherAtPeace from '../../../data/user_avatars/default_avatars/gopher-at-peace.png';
-import sleepingGopher from '../../../data/user_avatars/default_avatars/gopher-sleeping.png';
-import smilingGopher from '../../../data/user_avatars/default_avatars/gopher-smiling-blushing.png';
-import thinkingGopher from '../../../data/user_avatars/default_avatars/gopher-thinking.png';
-import gopherWink from '../../../data/user_avatars/default_avatars/gopher-wink.png';
+import angryGopher from '../images/default_avatars/gopher-angry.png';
+import gopherAtPeace from '../images/default_avatars/gopher-at-peace.png';
+import sleepingGopher from '../images/default_avatars/gopher-sleeping.png';
+import smilingGopher from '../images/default_avatars/gopher-smiling-blushing.png';
+import thinkingGopher from '../images/default_avatars/gopher-thinking.png';
+import gopherWink from '../images/default_avatars/gopher-wink.png';
+import defaultBanner from '../images/default_banners/default_banner.gif'
 
 export default function Registration() {
     const [formData, setFormData] = useState<Partial<User>>({});
@@ -27,7 +28,6 @@ export default function Registration() {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
-    const DEFAULT_BANNER_URL = 'http://localhost:3001/uploads/banners/default_banner.gif';
     const defaultAvatars = [angryGopher, gopherAtPeace, sleepingGopher, smilingGopher, thinkingGopher, gopherWink];
 
     const [defaultAvatar] = useState(() => {
@@ -176,7 +176,7 @@ export default function Registration() {
                 followers: 0,
                 following: 0,
                 profile_picture_url: profilePictureUrl || defaultAvatar,
-                background_picture_url: DEFAULT_BANNER_URL,
+                background_picture_url: defaultBanner,
             };
 
             const response = await fetch('http://localhost:3001/register', {
