@@ -178,7 +178,7 @@ export default function Registration() {
                 followers: 0,
                 following: 0,
                 profile_picture_url: profilePictureUrl || defaultAvatar,
-                background_picture_url: DEFAULT_BANNER_URL,
+                background_picture_url: defaultBanner,
             };
 
             const response = await fetch(`${API_ROOT}/register`, {
